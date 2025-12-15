@@ -3,7 +3,7 @@ import tailwind from '@astrojs/tailwind';
 import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
-  site: 'https://dprobo.com',
-  output: 'static',
+  site: 'https://biobolics-astro.vercel.app', // your Vercel domain
+  output: 'static',                             // must be 'static'
   integrations: [tailwind(), sitemap()],
 });
