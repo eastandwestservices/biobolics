@@ -1,0 +1,178 @@
+<header class="site-header">
+  <!-- Left: Logo -->
+  <div class="logo">
+    <a href="/">
+      <img src="/logo.png" alt="Biobolics Logo" />
+    </a>
+  </div>
+
+  <!-- Center: Navigation -->
+  <nav class="site-nav">
+    <ul>
+      <li><a href="/" class="nav-link">Home</a></li>
+      <li><a href="/about" class="nav-link">About Us</a></li>
+      <li><a href="/brands" class="nav-link">Our Brands</a></li>
+      <li><a href="/contact" class="nav-link">Contact Us</a></li>
+      <li><a href="/distributors" class="nav-link">Become a Distributor</a></li>
+    </ul>
+  </nav>
+
+  <!-- Right: Icons and text -->
+  <div class="header-right">
+    <!-- Search icon -->
+    <div class="search-container">
+      <button class="search-btn" aria-label="Search">
+        <svg xmlns="http://www.w3.org/2000/svg" height="20" width="20" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0016 9.5 6.5 6.5 0 109.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C8.01 14 6 11.99 6 9.5S8.01 5 10.5 5 15 7.01 15 9.5 12.99 14 10.5 14z"/>
+        </svg>
+      </button>
+      <input type="text" class="search-box" placeholder="Search..." />
+    </div>
+
+    <span>Blog</span>
+    <span>Sign In</span>
+
+    <!-- Dark mode icon -->
+    <button class="darkmode-btn" title="Toggle Dark Mode">
+      <svg xmlns="http://www.w3.org/2000/svg" height="20" width="20" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12 2a9.99 9.99 0 00-9.95 9h2.02a7.97 7.97 0 0113.86-5.3A10 10 0 0012 2z"/>
+      </svg>
+    </button>
+
+    <!-- Cart icon -->
+    <button class="cart-btn" title="View Cart">
+      <svg xmlns="http://www.w3.org/2000/svg" height="20" width="20" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zm10 0c-1.1 0-1.99.9-1.99 2S15.9 22 17 22s2-.9 2-2-.9-2-2-2zM7.82 14h8.36c.75 0 1.41-.41 1.75-1.03l3.24-5.88a.996.996 0 00-.87-1.48H5.21l-.94-2H1v2h2l3.6 7.59-1.35 2.44c-.17.31-.25.66-.25 1.02 0 1.1.9 2 2 2h12v-2H7.82z"/>
+      </svg>
+    </button>
+  </div>
+</header>
+
+<style>
+/* ---------- Header ---------- */
+.site-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 40px;
+  width: 100vw;
+  box-sizing: border-box;
+  background-color: #ffffff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+/* Logo image */
+.site-header .logo img {
+  height: 40px;
+  width: auto;
+}
+
+/* Center navigation */
+.site-header .site-nav {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.site-header .site-nav ul {
+  display: flex;
+  list-style: none;
+  gap: 30px;
+  margin: 0;
+  padding: 0;
+}
+
+.site-header .site-nav li a.nav-link {
+  cursor: pointer;
+  font-weight: 500;
+  text-decoration: none;
+  color: #333;
+  transition: color 0.3s ease;
+}
+
+.site-header .site-nav li a.nav-link:hover {
+  color: red;
+}
+
+/* Right section */
+.site-header .header-right {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  font-weight: 500;
+}
+
+.header-right span:hover {
+  color: red;
+  cursor: pointer;
+}
+
+/* Search */
+.search-container {
+  position: relative;
+}
+
+.search-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.search-box {
+  position: absolute;
+  right: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 0;
+  opacity: 0;
+  padding: 5px 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  transition: width 0.3s ease, opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.search-container:hover .search-box {
+  width: 200px;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Icon buttons */
+.darkmode-btn,
+.cart-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.darkmode-btn svg:hover,
+.cart-btn svg:hover,
+.search-btn svg:hover {
+  fill: red;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .site-header {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .site-header .site-nav ul {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .site-header .header-right {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
+
+/* Prevent horizontal scroll */
+body {
+  overflow-x: hidden;
+}
+</style>

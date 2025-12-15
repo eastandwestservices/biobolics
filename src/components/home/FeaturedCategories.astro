@@ -1,0 +1,65 @@
+---
+// src/components/home/FeaturedCategories.astro
+import "../../assets/styles/featured.css";
+
+// Sample data for 4 brands
+const brands = [
+  {
+    title: "Biobolics Sports",
+    tagline: "Performance supplements for athletes",
+    color: "#0070f3",
+    products: [
+      { name: "Protein Powder", image: "/products/sports1.png" },
+      { name: "Energy Capsules", image: "/products/sports2.png" },
+    ],
+  },
+  {
+    title: "Biobolics Vitamins",
+    tagline: "Daily vitamins for healthy living",
+    color: "#28a745",
+    products: [
+      { name: "Vitamin C", image: "/products/vitamins1.png" },
+      { name: "Multivitamins", image: "/products/vitamins2.png" },
+    ],
+  },
+  {
+    title: "Biobolics Gummies",
+    tagline: "Tasty gummy supplements",
+    color: "#ff4081",
+    products: [
+      { name: "Kids Gummies", image: "/products/gummies1.png" },
+      { name: "Adult Gummies", image: "/products/gummies2.png" },
+    ],
+  },
+  {
+    title: "Rite Stevia",
+    tagline: "Natural sugar alternative",
+    color: "#8bc34a",
+    products: [
+      { name: "Stevia Pack", image: "/products/stevia1.png" },
+      { name: "Stevia Drops", image: "/products/stevia2.png" },
+    ],
+  },
+];
+---
+
+<section class="featured-categories">
+  <h2>Featured Categories</h2>
+  <div class="brand-cards">
+    {brands.map((brand) => (
+      <div class="brand-card" style={`border-top: 4px solid ${brand.color}`}>
+        <div class="products">
+          {brand.products.map((p) => (
+            <div class="product-mockup">
+              <img src={p.image} alt={p.name} />
+              <p>{p.name}</p>
+            </div>
+          ))}
+        </div>
+        <h3>{brand.title}</h3>
+        <p class="tagline">{brand.tagline}</p>
+        <button class="shop-btn" style={`background-color: ${brand.color}`}>Shop {brand.title.split(" ")[0]}</button>
+      </div>
+    ))}
+  </div>
+</section>

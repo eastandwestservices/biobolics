@@ -1,0 +1,238 @@
+---
+const products = [
+  { name: "Protein Powder", image: "/products/sports1.png" },
+  { name: "Energy Capsules", image: "/products/sports2.png" },
+  { name: "Vitamin C", image: "/products/vitamins1.png" },
+  { name: "Multivitamins", image: "/products/vitamins2.png" },
+  { name: "Kids Gummies", image: "/products/gummies1.png" },
+  { name: "Adult Gummies", image: "/products/gummies2.png" },
+  { name: "Stevia Pack", image: "/products/stevia1.png" },
+  { name: "Stevia Drops", image: "/products/stevia2.png" },
+];
+---
+
+<section class="featured-carousel">
+  <h2>Featured Products</h2>
+
+  <div class="carousel-wrapper">
+    <button class="carousel-arrow prev">&#10094;</button>
+    <div class="carousel-row">
+      {products.map((product) => (
+        <div class="product-card">
+          <img src={product.image} alt={product.name} />
+          <h3>{product.name}</h3>
+          <button>Add to Cart</button>
+        </div>
+      ))}
+    </div>
+    <button class="carousel-arrow next">&#10095;</button>
+  </div>
+</section>
+
+<script type="module" client:load>
+  const row = document.querySelector(".carousel-row");
+  const next = document.querySelector(".carousel-arrow.next");
+  const prev = document.querySelector(".carousel-arrow.prev");
+
+  // Auto-scroll settings
+  const autoScrollSpeed = 0.5; // px per frame
+  let isDragging = false;
+  let startX, scrollLeft;
+  
+  // Drag / touch start
+  row.addEventListener("mousedown", (e) => {
+    isDragging = true;
+    row.classList.add("dragging");
+    startX = e.pageX - row.offsetLeft;
+    scrollLeft = row.scrollLeft;
+  });
+  row.addEventListener("touchstart", (e) => {
+    isDragging = true;
+    row.classList.add("dragging");
+    startX = e.touches[0].pageX - row.offsetLeft;
+    scrollLeft = row.scrollLeft;
+  });
+
+  // Drag / touch move
+  row.addEventListener("mousemove", (e) => {
+    if(!isDragging) return;
+    const x = e.pageX - row.offsetLeft;
+    const walk = (x - startX) * 2; // scroll-fast
+    row.scrollLeft = scrollLeft - walk;
+  });
+  row.addEventListener("touchmove", (e) => {
+    if(!isDragging) return;
+    const x = e.touches[0].pageX - row.offsetLeft;
+    const walk = (x - startX) * 2;
+    row.scrollLeft = scrollLeft - walk;
+  });
+
+  // Drag / touch end
+  const stopDrag = () => {
+    isDragging = false;
+    row.classList.remove("dragging");
+  };
+  row.addEventListener("mouseup", stopDrag);
+  row.addEventListener("mouseleave", stopDrag);
+  row.addEventListener("touchend", stopDrag);
+
+  // Arrow buttons
+  const scrollPerClick = 300;
+  next.addEventListener("click", () => {
+    row.scrollBy({ left: scrollPerClick, behavior: "smooth" });
+  });
+  prev.addEventListener("click", () => {
+    row.scrollBy({ left: -scrollPerClick, behavior: "smooth" });
+  });
+
+  // Infinite auto-scroll with momentum
+  let speed = autoScrollSpeed;
+  function autoScroll() {
+    if(!isDragging) {
+      row.scrollLeft += speed;
+      if(row.scrollLeft >= row.scrollWidth - row.clientWidth) {
+        row.scrollLeft = 0;
+      }
+    }
+    requestAnimationFrame(autoScroll);
+  }
+  requestAnimationFrame(autoScroll);
+</script>
+
+<style>
+.featured-carousel {
+  width: 100%;
+  padding: 60px 40px;
+  background: #f9f9f9;
+  box-sizing: border-box;
+}
+
+.featured-carousel h2 {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 30px;
+  font-weight: 600;
+}
+
+/* Carousel wrapper with arrows */
+.carousel-wrapper {
+  position: relative;
+}
+
+.carousel-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  background: rgba(0,0,0,0.6);
+  color: #fff;
+  border: none;
+  font-size: 2rem;
+  padding: 10px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.carousel-arrow:hover {
+  background: rgba(0,0,0,0.8);
+}
+
+.carousel-arrow.prev {
+  left: -20px;
+}
+
+.carousel-arrow.next {
+  right: -20px;
+}
+
+/* Horizontal Row */
+.carousel-row {
+  display: flex;
+  gap: 24px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-bottom: 20px;
+  scroll-behavior: smooth;
+  cursor: grab;
+}
+
+.carousel-row.dragging {
+  cursor: grabbing;
+}
+
+/* Hide scrollbar */
+.carousel-row::-webkit-scrollbar {
+  display: none;
+}
+.carousel-row {
+  scrollbar-width: none;
+}
+
+/* Product Card */
+.product-card {
+  min-width: 280px;
+  height: 420px;
+  background: #fff;
+  border-radius: 18px;
+  padding: 24px;
+  flex-shrink: 0;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+
+  scroll-snap-align: start;
+
+  box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+
+.product-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.12);
+}
+
+.product-card img {
+  width: 160px;
+  height: auto;
+  object-fit: contain;
+}
+
+.product-card h3 {
+  font-size: 1.1rem;
+  text-align: center;
+}
+
+.product-card button {
+  padding: 10px 18px;
+  border-radius: 10px;
+  border: none;
+  background: #000;
+  color: #fff;
+  cursor: pointer;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .product-card {
+    min-width: 220px;
+    height: 380px;
+  }
+}
+
+@media (max-width: 768px) {
+  .product-card {
+    min-width: 200px;
+    height: 360px;
+  }
+
+  .carousel-arrow.prev {
+    left: -10px;
+  }
+  .carousel-arrow.next {
+    right: -10px;
+  }
+}
+</style>

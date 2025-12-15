@@ -1,0 +1,51 @@
+---
+// src/components/home/BrandPanels.astro
+import "../../assets/styles/home.css";
+
+const brands = [
+  {
+    title: "Biobolics Sports",
+    description: "Performance supplements for athletes.",
+    image: "/brands/sports.jpg",
+    link: "/brands/sports"
+  },
+  {
+    title: "Biobolics Vitamins",
+    description: "Daily vitamins for healthy living.",
+    image: "/brands/vitamins.jpg",
+    link: "/brands/vitamins"
+  },
+  {
+    title: "Biobolics Gummies",
+    description: "Tasty gummy supplements for kids & adults.",
+    image: "/brands/gummies.jpg",
+    link: "/brands/gummies"
+  },
+  {
+    title: "Rite Stevia",
+    description: "Natural sugar alternative.",
+    image: "/brands/stevia.jpg",
+    link: "/brands/stevia"
+  }
+];
+---
+
+<section class="brand-panels" aria-label="Biobolics Brands">
+  {brands.map((brand) => (
+    <article class="brand-panel">
+      <a href={brand.link} aria-label={brand.title}>
+        <img
+          src={brand.image}
+          alt={brand.title}
+          loading="lazy"
+          decoding="async"
+        />
+
+        <div class="brand-content">
+          <h3>{brand.title}</h3>
+          <p>{brand.description}</p>
+        </div>
+      </a>
+    </article>
+  ))}
+</section>

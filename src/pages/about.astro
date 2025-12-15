@@ -1,0 +1,87 @@
+---
+import Layout from "../components/common/Layout.astro";
+import { sanityClient } from "../lib/sanity/client";
+
+/**
+ * GROQ query to fetch about page content.
+ * Returns null if no document exists — safely handled below
+ */
+const query = `*[_type == "aboutPage"][0]{
+  heroTitle,
+  heroSubtitle,
+  introText
+}`;
+
+let about = null;
+
+try {
+  about = await sanityClient.fetch(query);
+} catch (error) {
+  console.error("Sanity fetch error:", error);
+}
+---
+
+<Layout title="About Us | Biobolics">
+  <!-- Hero Section -->
+  <section class="about-hero">
+    <h1>
+      {about?.heroTitle ?? "Science-Backed Nutrition for Better Living"}
+    </h1>
+
+    <p class="subtitle">
+      {about?.heroSubtitle ??
+        "Human-focused, research-driven supplements built on trust, transparency, and science."}
+    </p>
+  </section>
+
+  <!-- Intro Content -->
+  <section class="about-content">
+    <p>
+      {about?.introText ??
+        "At Biobolics, we believe nutrition should be evidence-based, clean, and accessible. Our formulations are developed using scientific research, quality ingredients, and a commitment to improving everyday health."}
+    </p>
+  </section>
+</Layout>
+
+<style>
+/* ---------- About Page ---------- */
+
+.about-hero {
+  max-width: 1100px;
+  margin: auto;
+  padding: 4rem 1.5rem 2.5rem;
+  text-align: center;
+}
+
+.about-hero h1 {
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.about-hero .subtitle {
+  margin-top: 1rem;
+  font-size: 1.1rem;
+  color: #555;
+}
+
+.about-content {
+  max-width: 900px;
+  margin: auto;
+  padding: 2rem 1.5rem 4rem;
+  line-height: 1.75;
+  font-size: 1rem;
+  color: #333;
+}
+
+/* Responsive spacing */
+@media (max-width: 768px) {
+  .about-hero {
+    padding-top: 3rem;
+  }
+
+  .about-content {
+    padding: 1.5rem 1rem 3rem;
+  }
+}
+</style>

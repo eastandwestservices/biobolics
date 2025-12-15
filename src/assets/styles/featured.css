@@ -1,0 +1,111 @@
+/* ---------- Featured Categories ---------- */
+.featured-categories {
+  width: 100%;
+  padding: 40px 0; /* only top/bottom padding */
+  background-color: #f9f9f9;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.featured-categories h2 {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 40px;
+  font-weight: 600;
+}
+
+.brand-cards {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 4 columns full width */
+  gap: 0;                /* remove gaps to make cards flush */
+  width: 100vw;          /* full viewport width */
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.brand-card {
+  background-color: #ffffff;
+  border-radius: 0;        /* optional: remove border-radius to fully stretch */
+  padding: 30px 20px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  min-height: 350px;       /* taller cards */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.brand-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+}
+
+.brand-card .products {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
+.product-mockup img {
+  width: 80px;
+  height: auto;
+  border-radius: 8px;
+}
+
+.brand-card h3 {
+  margin: 10px 0 5px;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.brand-card .tagline {
+  font-size: 0.9rem;
+  color: #555;
+  margin-bottom: 10px;
+}
+
+.brand-card .shop-btn {
+  padding: 8px 15px;
+  border: none;
+  border-radius: 6px;
+  color: #fff;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+}
+
+.brand-card .shop-btn:hover {
+  opacity: 0.9;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1200px) {
+  .brand-cards {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 1024px) {
+  .brand-cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .brand-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .brand-card .products {
+    gap: 10px;
+  }
+
+  .product-mockup img {
+    width: 60px;
+  }
+}

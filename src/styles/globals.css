@@ -1,0 +1,27 @@
+/* Global box-sizing */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Prevent horizontal scroll */
+html, body {
+  overflow-x: hidden;
+  width: 100%;
+}
+body, html {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+main, footer, header, section {
+  width: 100vw;      /* full viewport width */
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}

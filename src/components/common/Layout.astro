@@ -1,0 +1,27 @@
+---
+// Layout wrapper for the site
+const { title = 'Biobolics' } = Astro.props;
+import Header from './Header.astro';
+import Footer from './Footer.astro';
+---
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <link rel="stylesheet" href="/assets/styles/home.css" />
+  </head>
+  <body class="bg-white text-gray-900">
+    <!-- Header at top -->
+    <Header />
+
+    <!-- Main content -->
+    <main class="site-main">
+      <slot />
+    </main>
+
+    <!-- Footer at bottom -->
+    <Footer />
+  </body>
+</html>
