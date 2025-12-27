@@ -43,7 +43,7 @@ import DarkModeToggle from './DarkModeToggle.astro';
     <a href="/signin" class="signin-link">Sign In</a>
 
     <!-- Dark Mode Toggle -->
-    <DarkModeToggle client:load />
+    <DarkModeToggle />
   </div>
 </header>
 
@@ -168,6 +168,13 @@ html.dark .logo-dark { display: block; }
   border: none;
   cursor: pointer;
   color: var(--link-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  transition: background 0.25s ease;
 }
 
 /* RESPONSIVE */

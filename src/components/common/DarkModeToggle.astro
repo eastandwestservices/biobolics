@@ -1,39 +1,26 @@
----
----
-<button
-  id="darkToggle"
-  class="darkmode-btn flex items-center justify-center w-9 h-9 rounded-full border-none transition-colors"
-  aria-label="Toggle dark mode"
-  client:load
->
-  <svg id="darkIcon" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-       viewBox="0 0 24 24" fill="none" stroke="currentColor"
-       stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-    <path id="iconPath" d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/>
+<button id="darkToggle" class="darkmode-btn" aria-label="Toggle dark mode" style="display:flex; align-items:center; justify-content:center; width:36px; height:36px; border-radius:50%; border:none; background:rgba(0,0,0,0.08); transition:background 0.25s ease;">
+  <svg id="darkIcon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/>
   </svg>
-
-  <script type="module">
-    const toggle = document.getElementById('darkToggle');
-    const icon = document.getElementById('iconPath');
-    const html = document.documentElement;
-
-    function updateIcon() {
-      if(html.classList.contains('dark')){
-        icon.setAttribute('d','M12 3.25a9 9 0 1 0 0 17.5 9 9 0 0 0 0-17.5z'); // sun
-      } else {
-        icon.setAttribute('d','M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z'); // moon
-      }
-    }
-
-    if(localStorage.getItem('theme') === 'dark'){
-      html.classList.add('dark');
-    }
-    updateIcon();
-
-    toggle.addEventListener('click',()=>{
-      html.classList.toggle('dark');
-      localStorage.setItem('theme', html.classList.contains('dark') ? 'dark':'light');
-      updateIcon();
-    });
-  </script>
 </button>
+
+<script type="module">
+const toggle = document.getElementById('darkToggle');
+const html = document.documentElement;
+
+function updateIcon() {
+  const icon = document.getElementById('darkIcon').querySelector('path');
+  icon.setAttribute('d', html.classList.contains('dark') 
+    ? 'M12 3.25a9 9 0 1 0 0 17.5 9 9 0 0 0 0-17.5z'  // sun
+    : 'M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z'); // moon
+}
+
+if(localStorage.getItem('theme')==='dark') html.classList.add('dark');
+updateIcon();
+
+toggle.addEventListener('click',()=>{
+  html.classList.toggle('dark');
+  localStorage.setItem('theme', html.classList.contains('dark')?'dark':'light');
+  updateIcon();
+});
+</script>
