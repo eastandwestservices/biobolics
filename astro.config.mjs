@@ -1,6 +1,6 @@
 import { defineConfig } from 'astro/config';
 
 export default defineConfig({
-  output: 'static', // important!
-  site: 'https://dprobo.com', // your domain
+  output: 'static',   // Important: build pure static site
+  site: 'https://dprobo.com', // Your domain
 });
