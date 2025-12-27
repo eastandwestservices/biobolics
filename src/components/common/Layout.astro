@@ -1,8 +1,8 @@
 ---
-// Layout wrapper for the site
-const { title = 'Biobolics' } = Astro.props;
 import Header from './Header.astro';
 import Footer from './Footer.astro';
+
+const { title = 'Biobolics' } = Astro.props;
 ---
 
 <html lang="en">
@@ -10,18 +10,18 @@ import Footer from './Footer.astro';
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title}</title>
-    <link rel="stylesheet" href="/assets/styles/home.css" />
+    <link rel="stylesheet" href="/assets/styles/globals.css" />
   </head>
-  <body class="bg-white text-gray-900">
-    <!-- Header at top -->
+  <body>
+    <!-- Header -->
     <Header />
 
-    <!-- Main content -->
+    <!-- Main Content -->
     <main class="site-main">
       <slot />
     </main>
 
-    <!-- Footer at bottom -->
+    <!-- Footer -->
     <Footer />
   </body>
 </html>

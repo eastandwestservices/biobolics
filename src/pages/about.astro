@@ -1,87 +1,325 @@
 ---
 import Layout from "../components/common/Layout.astro";
-import { sanityClient } from "../lib/sanity/client";
-
-/**
- * GROQ query to fetch about page content.
- * Returns null if no document exists — safely handled below
- */
-const query = `*[_type == "aboutPage"][0]{
-  heroTitle,
-  heroSubtitle,
-  introText
-}`;
-
-let about = null;
-
-try {
-  about = await sanityClient.fetch(query);
-} catch (error) {
-  console.error("Sanity fetch error:", error);
-}
 ---
 
-<Layout title="About Us | Biobolics">
-  <!-- Hero Section -->
-  <section class="about-hero">
-    <h1>
-      {about?.heroTitle ?? "Science-Backed Nutrition for Better Living"}
-    </h1>
+<Layout title="About Biobolics | Science-Driven Nutrition">
+  <main class="about-page">
 
-    <p class="subtitle">
-      {about?.heroSubtitle ??
-        "Human-focused, research-driven supplements built on trust, transparency, and science."}
-    </p>
-  </section>
+    <!-- HERO -->
+    <section class="about-hero">
+      <img src="/images/about-lab.png" alt="Science Lab" class="hero-img" />
+      <div class="hero-overlay"></div>
+      <div class="hero-content fade-in">
+        <h1>About Biobolics</h1>
+        <p>
+          Science-driven nutrition crafted to support performance, wellness, and everyday health — for all ages.
+        </p>
+      </div>
+    </section>
 
-  <!-- Intro Content -->
-  <section class="about-content">
-    <p>
-      {about?.introText ??
-        "At Biobolics, we believe nutrition should be evidence-based, clean, and accessible. Our formulations are developed using scientific research, quality ingredients, and a commitment to improving everyday health."}
-    </p>
-  </section>
+    <!-- WHO / WHAT / JOURNEY -->
+    <section class="about-core">
+      <div class="core-grid">
+
+        <div class="core-card fade-up delay-1">
+          <h2>Who We Are</h2>
+          <p>
+            Biobolics is a premium nutrition company focused on delivering high-quality, science-backed formulations.
+          </p>
+          <p>
+            Our mission is to make advanced nutrition accessible, trustworthy, and effective.
+          </p>
+        </div>
+
+        <div class="core-card fade-up delay-2">
+          <h2>What We Do</h2>
+          <p>
+            We develop supplements across sports nutrition, daily wellness, gummies, and natural sweeteners.
+          </p>
+          <p>
+            All products are proudly <strong>Made in the USA</strong> following strict quality standards.
+          </p>
+        </div>
+
+        <div class="core-card fade-up delay-3">
+          <h2>Our Journey</h2>
+          <p>
+            Founded with a passion for science and performance, Biobolics continues to evolve through innovation and research.
+          </p>
+          <p>
+            Quality, transparency, and results guide every step we take.
+          </p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- QUALITY & SCIENCE -->
+    <section class="about-quality fade-in">
+      <div class="container-narrow">
+        <h2>Quality & Science</h2>
+        <p>
+          Every Biobolics product is formulated using evidence-based ingredients and manufactured in certified facilities.
+        </p>
+        <p>
+          Rigorous testing ensures purity, consistency, and safety in every batch.
+        </p>
+      </div>
+    </section>
+
+    <!-- CERTIFICATIONS / MADE IN USA -->
+    <section class="about-certifications fade-in">
+      <div class="container">
+        <h2>Our Certifications</h2>
+        <p>Trusted quality and safety for every product we make.</p>
+
+        <div class="cert-grid">
+          <div class="cert-card">
+            <img src="/images/cert-made-in-usa.webp" alt="Made in USA" />
+            <span>Made in USA</span>
+          </div>
+          <div class="cert-card">
+            <img src="/images/cert-gmp.webp" alt="GMP Certified" />
+            <span>GMP Certified</span>
+          </div>
+          <div class="cert-card">
+            <img src="/images/cert-lab-tested.webp" alt="Lab Tested" />
+            <span>Lab Tested</span>
+          </div>
+          <div class="cert-card">
+            <img src="/images/cert-third-party.webp" alt="Third-party Verified" />
+            <span>Third-party Verified</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BRAND PANELS -->
+    <section class="about-brands fade-in">
+      <div class="container">
+        <h2>Our Brand Ecosystem</h2>
+        <div class="brand-grid">
+          <a href="/brands/biobolics-sports" class="brand-card">Biobolics Sports</a>
+          <a href="/brands/biobolics-vitamins" class="brand-card">Biobolics Vitamins</a>
+          <a href="/brands/biobolics-gummies" class="brand-card">Biobolics Gummies</a>
+          <a href="/brands/rite-stevia" class="brand-card">Rite Stevia</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="about-cta fade-in">
+      <div class="container-narrow">
+        <h2>Build Health With Biobolics</h2>
+        <p>
+          Explore our product range or connect with us for partnership and distribution opportunities.
+        </p>
+        <a href="/contact" class="cta-btn">Contact Us</a>
+      </div>
+    </section>
+
+  </main>
 </Layout>
 
 <style>
-/* ---------- About Page ---------- */
+/* ============ GLOBAL FONT ============ */
+@font-face {
+  font-family: "Square721BT";
+  src: url("/fonts/Square721BT-Roman.woff2") format("woff2");
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "Square721BT";
+  src: url("/fonts/Square721BT-Bold.woff2") format("woff2");
+  font-weight: 700; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "Square721BT";
+  src: url("/fonts/Square721BT-BoldExtended.woff2") format("woff2");
+  font-weight: 800; font-style: normal; font-display: swap;
+}
 
+/* ============ HERO ============ */
 .about-hero {
-  max-width: 1100px;
-  margin: auto;
-  padding: 4rem 1.5rem 2.5rem;
+  position: relative;
+  min-height: 36vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  overflow: hidden;
+}
+
+.hero-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(11,15,20,0.65);
+  z-index: 1;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 900px;
+  padding: 2rem;
+  color: #ffffff;
+}
+
+.hero-content h1 {
+  font-family: "Square721BT", sans-serif;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-size: clamp(2.4rem, 4vw, 3rem);
+}
+
+.hero-content p {
+  margin-top: 1rem;
+  font-family: "Square721BT", sans-serif;
+  font-weight: 400;
+  opacity: 0.95;
+}
+
+/* ============ CORE ============ */
+.about-core {
+  padding: 5rem 1.5rem;
+  background: #ffffff;
+}
+
+.core-grid {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2.5rem;
+}
+
+.core-card {
+  background: linear-gradient(145deg, #ffffff, #f3f6fa);
+  padding: 2.8rem;
+  border-radius: 1.6rem;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.06);
+}
+
+.core-card h2 {
+  font-family: "Square721BT", sans-serif;
+  font-weight: 800;
+  margin-bottom: 1rem;
+}
+
+/* ============ QUALITY ============ */
+.about-quality {
+  padding: 5rem 1.5rem;
+  background: #eef4fb;
   text-align: center;
 }
 
-.about-hero h1 {
-  font-size: clamp(2rem, 4vw, 3rem);
-  font-weight: 700;
-  line-height: 1.2;
+/* ============ CERTIFICATIONS ============ */
+.about-certifications {
+  padding: 5rem 1.5rem;
+  background: #f9fbfd;
+  text-align: center;
 }
 
-.about-hero .subtitle {
-  margin-top: 1rem;
-  font-size: 1.1rem;
-  color: #555;
+.cert-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 2rem;
+  justify-items: center;
+  align-items: center;
 }
 
-.about-content {
-  max-width: 900px;
-  margin: auto;
-  padding: 2rem 1.5rem 4rem;
-  line-height: 1.75;
-  font-size: 1rem;
-  color: #333;
+.cert-card {
+  background: #ffffff;
+  padding: 1.5rem;
+  border-radius: 1.4rem;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.06);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* Responsive spacing */
-@media (max-width: 768px) {
-  .about-hero {
-    padding-top: 3rem;
-  }
-
-  .about-content {
-    padding: 1.5rem 1rem 3rem;
-  }
+.cert-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 16px 35px rgba(0,0,0,0.1);
 }
+
+.cert-card img { width: 80px; height: auto; margin-bottom: 0.8rem; }
+.cert-card span { font-family: "Square721BT", sans-serif; font-weight: 700; font-size: 0.95rem; }
+
+/* ============ BRANDS ============ */
+.about-brands {
+  padding: 5rem 1.5rem;
+  background: linear-gradient(180deg, #ffffff, #f8fafc);
+  text-align: center;
+}
+
+.brand-grid {
+  margin-top: 2.8rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 2rem;
+}
+
+.brand-card {
+  display: block;
+  background: #ffffff;
+  padding: 2.2rem;
+  border-radius: 1.4rem;
+  text-align: center;
+  font-family: "Square721BT", sans-serif;
+  font-weight: 800;
+  color: #0b0f14;
+  text-decoration: none;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.brand-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 18px 40px rgba(0,0,0,0.12);
+}
+
+/* ============ CTA ============ */
+.about-cta {
+  padding: 5rem 1.5rem;
+  background: linear-gradient(135deg, #0b1d33, #102a44);
+  color: #ffffff;
+  text-align: center;
+}
+
+.cta-btn {
+  display: inline-block;
+  margin-top: 2rem;
+  padding: 0.9rem 3rem;
+  background: #ffffff;
+  color: #000000;
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: 999px;
+}
+
+/* ============ CONTAINERS ============ */
+.container { max-width: 1200px; margin: 0 auto; }
+.container-narrow { max-width: 860px; margin: 0 auto; }
+
+/* ============ ANIMATIONS ============ */
+.fade-in { opacity: 0; animation: fadeIn 0.9s ease forwards; }
+.fade-up { opacity: 0; transform: translateY(24px); animation: fadeUp 0.9s ease forwards; }
+.delay-1 { animation-delay: 0.15s; }
+.delay-2 { animation-delay: 0.3s; }
+.delay-3 { animation-delay: 0.45s; }
+
+@keyframes fadeIn { to { opacity: 1; } }
+@keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
 </style>

@@ -1,51 +1,198 @@
 ---
-// src/components/home/BrandPanels.astro
-import "../../assets/styles/home.css";
-
 const brands = [
-  {
+  { 
     title: "Biobolics Sports",
+    label: "Bio Sports",
+    frontImage: "/brands/sports-front.webp",
+    backImage: "/brands/sports-back.webp",
     description: "Performance supplements for athletes.",
-    image: "/brands/sports.jpg",
-    link: "/brands/sports"
+    link: "/brand/sports",
+    btnClass: "btn-sports"
   },
-  {
+  { 
     title: "Biobolics Vitamins",
-    description: "Daily vitamins for healthy living.",
-    image: "/brands/vitamins.jpg",
-    link: "/brands/vitamins"
+    label: "Bio Vitamins",
+    frontImage: "/brands/vitamins-front.webp",
+    backImage: "/brands/vitamins-back.webp",
+    description: "Essential daily vitamins for wellness.",
+    link: "/brand/vitamins",
+    btnClass: "btn-vitamins"
   },
-  {
+  { 
     title: "Biobolics Gummies",
-    description: "Tasty gummy supplements for kids & adults.",
-    image: "/brands/gummies.jpg",
-    link: "/brands/gummies"
+    label: "Bio Gummies",
+    frontImage: "/brands/gummies-front.webp",
+    backImage: "/brands/gummies-back.webp",
+    description: "Tasty gummies packed with nutrients.",
+    link: "/brand/gummies",
+    btnClass: "btn-gummies"
   },
-  {
+  { 
     title: "Rite Stevia",
-    description: "Natural sugar alternative.",
-    image: "/brands/stevia.jpg",
-    link: "/brands/stevia"
-  }
+    label: "Rite Stevia",
+    frontImage: "/brands/stevia-front.webp",
+    backImage: "/brands/stevia-back.webp",
+    description: "Natural sweetener for a healthy lifestyle.",
+    link: "/brand/stevia",
+    btnClass: "btn-stevia"
+  },
 ];
 ---
 
-<section class="brand-panels" aria-label="Biobolics Brands">
+<section class="brand-panels">
   {brands.map((brand) => (
-    <article class="brand-panel">
-      <a href={brand.link} aria-label={brand.title}>
-        <img
-          src={brand.image}
-          alt={brand.title}
-          loading="lazy"
-          decoding="async"
-        />
+    <div class="brand-card-wrapper">
+      <div class="card-inner">
 
-        <div class="brand-content">
-          <h3>{brand.title}</h3>
-          <p>{brand.description}</p>
+        <!-- FRONT -->
+        <div class="card-face card-front">
+          <img src={brand.frontImage} alt={brand.title} />
+
+          <!-- FRONT LABEL -->
+          <div class={`front-label ${brand.btnClass}`}>
+            {brand.label}
+          </div>
         </div>
-      </a>
-    </article>
+
+        <!-- BACK -->
+        <div class="card-face card-back">
+          <img src={brand.backImage} alt={brand.title + " Back"} />
+
+          <div class="back-overlay">
+            <p>{brand.description}</p>
+            <a href={brand.link} class={`back-btn ${brand.btnClass}`}>
+              Enter
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
   ))}
 </section>
+
+<script>
+  document.querySelectorAll('.brand-card-wrapper').forEach(card => {
+    card.addEventListener('click', e => {
+      if (e.target.closest('.back-btn')) return;
+      if (window.matchMedia('(hover: none)').matches) {
+        e.preventDefault();
+        card.classList.toggle('is-flipped');
+      }
+    });
+  });
+</script>
+
+<style>
+.brand-panels {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2rem;
+  padding: 2rem;
+}
+
+.brand-card-wrapper {
+  height: 470px;
+  perspective: 1500px;
+}
+
+.card-inner {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transition: transform 0.8s ease;
+  transform-style: preserve-3d;
+  border-radius: 1.5rem;
+}
+
+.brand-card-wrapper:hover .card-inner {
+  transform: rotateY(180deg);
+}
+
+.brand-card-wrapper.is-flipped .card-inner {
+  transform: rotateY(180deg);
+}
+
+.card-face {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  border-radius: 1.5rem;
+  overflow: hidden;
+}
+
+.card-face img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ✅ FRONT LABEL — 20% SMALLER, BOTTOM-CENTER, SINGLE LINE */
+.front-label {
+  position: absolute;
+  left: 50%;
+  bottom: 1.5rem;
+  transform: translateX(-50%);
+
+  padding: 0.76rem 1.52rem;   /* overall size reduced 20% */
+  font-size: 1.28rem;        /* 20% smaller */
+  font-family: "Square721BT", sans-serif;
+  font-weight: 700;
+  color: white;
+  white-space: nowrap;
+
+  border-radius: 0.68rem;
+  box-shadow:
+    inset 0 1px 3px rgba(255,255,255,0.45),
+    inset 0 -3px 6px rgba(0,0,0,0.65);
+}
+
+/* BACK */
+.card-back {
+  transform: rotateY(180deg);
+}
+
+.card-back img {
+  position: absolute;
+  inset: 0;
+}
+
+.back-overlay {
+  position: absolute;
+  bottom: 1.5rem;
+  width: 100%;
+  text-align: center;
+  z-index: 2;
+  color: white;
+  font-family: "Square721BT", sans-serif;
+  background: rgba(0,0,0,0.2);
+  padding: 0.6rem;
+}
+
+.back-btn {
+  display: inline-block;
+  margin-top: 0.6rem;
+  padding: 0.55rem 1.3rem;
+  font-family: "Square721BT", sans-serif;
+  border-radius: 0.6rem;
+  color: white;
+  border: 1px solid rgba(255,255,255,0.3);
+}
+
+/* BRAND GRADIENTS */
+.btn-sports {
+  background: linear-gradient(to bottom, #000, #cfcfcf);
+}
+
+.btn-vitamins {
+  background: linear-gradient(to bottom, #c62828, #4a0000);
+}
+
+.btn-gummies {
+  background: linear-gradient(to bottom, #4fc3f7, #0d47a1);
+}
+
+.btn-stevia {
+  background: linear-gradient(to bottom, #7ed957, #0b3d0b);
+}
+</style>
