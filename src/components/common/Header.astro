@@ -3,147 +3,125 @@ import DarkModeToggle from './DarkModeToggle.astro';
 ---
 
 <header class="site-header">
-  <!-- Logo -->
-  <div class="logo">
-    <a href="/">
-      <img src="/images/logo-light.png" alt="Biobolics Logo" class="logo-img logo-light" />
-      <img src="/images/logo-dark.png" alt="Biobolics Logo" class="logo-img logo-dark" />
-    </a>
-  </div>
-
-  <!-- Navigation -->
-  <nav class="site-nav">
-    <ul>
-      <li><a href="/" class="nav-link">Home</a></li>
-      <li><a href="/about" class="nav-link">About</a></li>
-      <li><a href="/nutrition" class="nav-link">Nutrition</a></li>
-      <li><a href="/brands" class="nav-link">Brands</a></li>
-      <li><a href="/blog" class="nav-link">Blog</a></li>
-      <li><a href="/contact" class="nav-link">Contact</a></li>
-      <li><a href="/distributors" class="nav-link">Distributor</a></li>
-    </ul>
-  </nav>
-
-  <!-- Right Section -->
-  <div class="header-right">
-    <!-- Search -->
-    <div class="search-container">
-      <button class="search-btn" aria-label="Search">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-          viewBox="0 0 24 24" fill="none" stroke="currentColor"
-          stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="11" cy="11" r="8"/>
-          <line x1="21" y1="21" x2="16.65" y2="16.65"/>
-        </svg>
-      </button>
-      <input class="search-box" type="text" placeholder="Search..." />
+  <div class="header-inner">
+    <!-- Logo -->
+    <div class="logo">
+      <a href="/">
+        <img src="/images/logo-light.png" alt="Biobolics Logo" class="logo-img logo-light" />
+        <img src="/images/logo-dark.png" alt="Biobolics Logo" class="logo-img logo-dark" />
+      </a>
     </div>
 
-    <!-- Sign In -->
-    <a href="/signin" class="signin-link">Sign In</a>
+    <!-- Navigation -->
+    <nav class="site-nav">
+      <ul>
+        <li><a href="/" class="nav-link">Home</a></li>
+        <li><a href="/about" class="nav-link">About</a></li>
+        <li><a href="/nutrition" class="nav-link">Nutrition</a></li>
+        <li><a href="/brands" class="nav-link">Brands</a></li>
+        <li><a href="/blog" class="nav-link">Blog</a></li>
+        <li><a href="/contact" class="nav-link">Contact</a></li>
+        <li><a href="/distributors" class="nav-link">Distributor</a></li>
+      </ul>
+    </nav>
 
-    <!-- Dark Mode Toggle -->
-    <DarkModeToggle />
+    <!-- Right Section -->
+    <div class="header-right">
+      <div class="search-container">
+        <button class="search-btn" aria-label="Search">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+            viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"/>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+          </svg>
+        </button>
+        <input class="search-box" type="text" placeholder="Search..." />
+      </div>
+
+      <a href="/signin" class="signin-link">Sign In</a>
+
+      <div class="dark-toggle">
+        <DarkModeToggle />
+      </div>
+    </div>
   </div>
 </header>
 
 <style>
 :root {
   --header-bg: #ffffff;
-  --link-color: #333333;
+  --link-color: #111827;
+  --font-main: 'Inter', system-ui, -apple-system, sans-serif;
 }
 
 html.dark {
-  --header-bg: #111827;
+  --header-bg: #0b0f19;
   --link-color: #f3f4f6;
 }
 
-/* ===== HEADER ===== */
+/* HEADER WRAPPER */
 .site-header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: var(--header-bg);
+  box-shadow: 0 2px 8px rgba(0,0,0,.05);
+}
+
+/* CENTERED CONTAINER */
+.header-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 14px 24px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 16px 40px;
-  width: 100%;
-  position: sticky;
-  top: 0;
-  z-index: 9999;
-  background: var(--header-bg);
-  box-shadow: 0 2px 8px rgba(0,0,0,.05);
-  transition: background 0.3s ease, color 0.3s ease;
+  font-family: var(--font-main);
 }
 
-/* ===== LOGO ===== */
-.logo {
-  height: 56px;
-  display: flex;
-  align-items: center;
-}
-
-.logo a { display: flex; align-items: center; }
-
-.logo-img { max-height: 100%; width: auto; display: block; }
-
+/* LOGO */
+.logo { height: 52px; display: flex; align-items: center; }
+.logo-img { max-height: 100%; display: block; }
 .logo-dark { display: none; }
 html.dark .logo-light { display: none; }
 html.dark .logo-dark { display: block; }
 
-/* ===== NAVIGATION ===== */
-.site-nav {
-  flex: 1;
-  display: flex;
-  justify-content: center;
-}
-
+/* NAV */
 .site-nav ul {
   display: flex;
-  gap: 28px;
+  gap: 26px;
   list-style: none;
-  padding: 0;
   margin: 0;
+  padding: 0;
 }
 
 .nav-link {
   text-decoration: none;
   font-weight: 500;
   color: var(--link-color);
-  transition: color 0.3s ease;
 }
 
 .nav-link:hover { color: #e10600; }
 
-/* ===== HEADER RIGHT ===== */
+/* RIGHT */
 .header-right {
   display: flex;
   align-items: center;
-  gap: 18px;
+  gap: 16px;
 }
 
-/* SEARCH */
 .search-container { position: relative; }
-
-.search-btn {
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: rgba(0,0,0,.55);
-  transition: color 0.3s ease;
-}
-
-.search-btn:hover { color: #2f80ed; }
 
 .search-box {
   position: absolute;
-  right: 100%;
+  right: 110%;
   top: 50%;
   transform: translateY(-50%);
   width: 0;
   opacity: 0;
-  padding: 6px 10px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  transition: all 0.3s ease;
   pointer-events: none;
+  transition: all .25s ease;
 }
 
 .search-container:hover .search-box {
@@ -152,38 +130,18 @@ html.dark .logo-dark { display: block; }
   pointer-events: auto;
 }
 
-/* SIGN IN */
 .signin-link {
   text-decoration: none;
-  font-weight: 500;
   color: var(--link-color);
-  transition: color 0.3s ease;
 }
 
-.signin-link:hover { color: #e10600; }
-
-/* DARK MODE BUTTON */
-.darkmode-btn {
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: var(--link-color);
+.dark-toggle {
   display: flex;
   align-items: center;
-  justify-content: center;
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  transition: background 0.25s ease;
 }
 
 /* RESPONSIVE */
 @media (max-width: 900px) {
-  .site-header {
-    flex-direction: column;
-    gap: 14px;
-  }
-
-  .site-nav ul { flex-direction: column; gap: 12px; }
+  .site-nav { display: none; }
 }
 </style>
