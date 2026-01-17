@@ -12,7 +12,8 @@ import Layout from "../components/common/Layout.astro";
       <div class="hero-content fade-in">
         <h1>About Biobolics</h1>
         <p>
-          Science-driven nutrition crafted to support performance, wellness, and everyday health — for all ages.
+          Science-driven nutrition crafted to support performance, wellness,
+          and everyday health — for all ages.
         </p>
       </div>
     </section>
@@ -20,37 +21,40 @@ import Layout from "../components/common/Layout.astro";
     <!-- WHO / WHAT / JOURNEY -->
     <section class="about-core">
       <div class="core-grid">
-
         <div class="core-card fade-up delay-1">
           <h2>Who We Are</h2>
           <p>
-            Biobolics is a premium nutrition company focused on delivering high-quality, science-backed formulations.
+            Biobolics is a premium nutrition company focused on delivering
+            high-quality, science-backed formulations.
           </p>
           <p>
-            Our mission is to make advanced nutrition accessible, trustworthy, and effective.
+            Our mission is to make advanced nutrition accessible,
+            trustworthy, and effective.
           </p>
         </div>
 
         <div class="core-card fade-up delay-2">
           <h2>What We Do</h2>
           <p>
-            We develop supplements across sports nutrition, daily wellness, gummies, and natural sweeteners.
+            We develop supplements across sports nutrition, daily wellness,
+            gummies, and natural sweeteners.
           </p>
           <p>
-            All products are proudly <strong>Made in the USA</strong> following strict quality standards.
+            All products are proudly <strong>Made in the USA</strong> following
+            strict quality standards.
           </p>
         </div>
 
         <div class="core-card fade-up delay-3">
           <h2>Our Journey</h2>
           <p>
-            Founded with a passion for science and performance, Biobolics continues to evolve through innovation and research.
+            Founded with a passion for science and performance, Biobolics
+            continues to evolve through innovation and research.
           </p>
           <p>
             Quality, transparency, and results guide every step we take.
           </p>
         </div>
-
       </div>
     </section>
 
@@ -59,15 +63,17 @@ import Layout from "../components/common/Layout.astro";
       <div class="container-narrow">
         <h2>Quality & Science</h2>
         <p>
-          Every Biobolics product is formulated using evidence-based ingredients and manufactured in certified facilities.
+          Every Biobolics product is formulated using evidence-based
+          ingredients and manufactured in certified facilities.
         </p>
         <p>
-          Rigorous testing ensures purity, consistency, and safety in every batch.
+          Rigorous testing ensures purity, consistency, and safety in every
+          batch.
         </p>
       </div>
     </section>
 
-    <!-- CERTIFICATIONS / MADE IN USA -->
+    <!-- CERTIFICATIONS -->
     <section class="about-certifications fade-in">
       <div class="container">
         <h2>Our Certifications</h2>
@@ -94,7 +100,7 @@ import Layout from "../components/common/Layout.astro";
       </div>
     </section>
 
-    <!-- BRAND PANELS -->
+    <!-- BRANDS -->
     <section class="about-brands fade-in">
       <div class="container">
         <h2>Our Brand Ecosystem</h2>
@@ -112,7 +118,8 @@ import Layout from "../components/common/Layout.astro";
       <div class="container-narrow">
         <h2>Build Health With Biobolics</h2>
         <p>
-          Explore our product range or connect with us for partnership and distribution opportunities.
+          Explore our product range or connect with us for partnership
+          and distribution opportunities.
         </p>
         <a href="/contact" class="cta-btn">Contact Us</a>
       </div>
@@ -120,206 +127,3 @@ import Layout from "../components/common/Layout.astro";
 
   </main>
 </Layout>
-
-<style>
-/* ============ GLOBAL FONT ============ */
-@font-face {
-  font-family: "Square721BT";
-  src: url("/fonts/Square721BT-Roman.woff2") format("woff2");
-  font-weight: 400; font-style: normal; font-display: swap;
-}
-@font-face {
-  font-family: "Square721BT";
-  src: url("/fonts/Square721BT-Bold.woff2") format("woff2");
-  font-weight: 700; font-style: normal; font-display: swap;
-}
-@font-face {
-  font-family: "Square721BT";
-  src: url("/fonts/Square721BT-BoldExtended.woff2") format("woff2");
-  font-weight: 800; font-style: normal; font-display: swap;
-}
-
-/* ============ HERO ============ */
-.about-hero {
-  position: relative;
-  min-height: 36vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  overflow: hidden;
-}
-
-.hero-img {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  z-index: 0;
-}
-
-.hero-overlay {
-  position: absolute;
-  inset: 0;
-  background: rgba(11,15,20,0.65);
-  z-index: 1;
-}
-
-.hero-content {
-  position: relative;
-  z-index: 2;
-  max-width: 900px;
-  padding: 2rem;
-  color: #ffffff;
-}
-
-.hero-content h1 {
-  font-family: "Square721BT", sans-serif;
-  font-weight: 800;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  font-size: clamp(2.4rem, 4vw, 3rem);
-}
-
-.hero-content p {
-  margin-top: 1rem;
-  font-family: "Square721BT", sans-serif;
-  font-weight: 400;
-  opacity: 0.95;
-}
-
-/* ============ CORE ============ */
-.about-core {
-  padding: 5rem 1.5rem;
-  background: #ffffff;
-}
-
-.core-grid {
-  max-width: 1200px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 2.5rem;
-}
-
-.core-card {
-  background: linear-gradient(145deg, #ffffff, #f3f6fa);
-  padding: 2.8rem;
-  border-radius: 1.6rem;
-  box-shadow: 0 12px 30px rgba(0,0,0,0.06);
-}
-
-.core-card h2 {
-  font-family: "Square721BT", sans-serif;
-  font-weight: 800;
-  margin-bottom: 1rem;
-}
-
-/* ============ QUALITY ============ */
-.about-quality {
-  padding: 5rem 1.5rem;
-  background: #eef4fb;
-  text-align: center;
-}
-
-/* ============ CERTIFICATIONS ============ */
-.about-certifications {
-  padding: 5rem 1.5rem;
-  background: #f9fbfd;
-  text-align: center;
-}
-
-.cert-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 2rem;
-  justify-items: center;
-  align-items: center;
-}
-
-.cert-card {
-  background: #ffffff;
-  padding: 1.5rem;
-  border-radius: 1.4rem;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.06);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.cert-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 16px 35px rgba(0,0,0,0.1);
-}
-
-.cert-card img { width: 80px; height: auto; margin-bottom: 0.8rem; }
-.cert-card span { font-family: "Square721BT", sans-serif; font-weight: 700; font-size: 0.95rem; }
-
-/* ============ BRANDS ============ */
-.about-brands {
-  padding: 5rem 1.5rem;
-  background: linear-gradient(180deg, #ffffff, #f8fafc);
-  text-align: center;
-}
-
-.brand-grid {
-  margin-top: 2.8rem;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 2rem;
-}
-
-.brand-card {
-  display: block;
-  background: #ffffff;
-  padding: 2.2rem;
-  border-radius: 1.4rem;
-  text-align: center;
-  font-family: "Square721BT", sans-serif;
-  font-weight: 800;
-  color: #0b0f14;
-  text-decoration: none;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.05);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.brand-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 18px 40px rgba(0,0,0,0.12);
-}
-
-/* ============ CTA ============ */
-.about-cta {
-  padding: 5rem 1.5rem;
-  background: linear-gradient(135deg, #0b1d33, #102a44);
-  color: #ffffff;
-  text-align: center;
-}
-
-.cta-btn {
-  display: inline-block;
-  margin-top: 2rem;
-  padding: 0.9rem 3rem;
-  background: #ffffff;
-  color: #000000;
-  font-weight: 600;
-  text-decoration: none;
-  border-radius: 999px;
-}
-
-/* ============ CONTAINERS ============ */
-.container { max-width: 1200px; margin: 0 auto; }
-.container-narrow { max-width: 860px; margin: 0 auto; }
-
-/* ============ ANIMATIONS ============ */
-.fade-in { opacity: 0; animation: fadeIn 0.9s ease forwards; }
-.fade-up { opacity: 0; transform: translateY(24px); animation: fadeUp 0.9s ease forwards; }
-.delay-1 { animation-delay: 0.15s; }
-.delay-2 { animation-delay: 0.3s; }
-.delay-3 { animation-delay: 0.45s; }
-
-@keyframes fadeIn { to { opacity: 1; } }
-@keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
-</style>

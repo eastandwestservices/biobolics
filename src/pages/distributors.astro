@@ -1,0 +1,106 @@
+---
+import Layout from "../components/common/Layout.astro";
+---
+
+<Layout title="Distributors | Biobolics">
+  <main class="distributors-page">
+    <section class="dist-hero">
+      <div class="container">
+        <h1>Biobolics Distributor Portal</h1>
+        <p>Partner with us to bring premium nutrition to the world.</p>
+        <div class="cta-group">
+          <a href="/distributor/login" class="btn btn-primary">Distributor Login</a>
+          <a href="/contact" class="btn btn-outline">Become a Distributor</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="dist-features">
+      <div class="container">
+        <div class="feature-card">
+          <h3>Global Reach</h3>
+          <p>Join our expanding network of distributors across multiple continents.</p>
+        </div>
+        <div class="feature-card">
+          <h3>Marketing Support</h3>
+          <p>Access exclusive marketing materials, product images, and sales guides.</p>
+        </div>
+        <div class="feature-card">
+          <h3>Priority Access</h3>
+          <p>Get early access to new product launches and special distributor pricing.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+</Layout>
+
+<style>
+  .dist-hero {
+    background: var(--bg-secondary);
+    padding: 6rem 1rem;
+    text-align: center;
+  }
+  .dist-hero h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+  }
+  .dist-hero p {
+    font-size: 1.5rem;
+    color: var(--text-secondary);
+    margin-bottom: 3rem;
+  }
+  .cta-group {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .btn {
+    display: inline-block;
+    padding: 1rem 2rem;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+  .btn-primary {
+    background: var(--primary-color, #e10600);
+    color: white;
+  }
+  .btn-primary:hover {
+    background: #b00500;
+  }
+  .btn-outline {
+    border: 2px solid var(--text-primary);
+    color: var(--text-primary);
+  }
+  .btn-outline:hover {
+    background: var(--text-primary);
+    color: var(--bg-primary, #fff);
+  }
+
+  .dist-features {
+    padding: 4rem 1rem;
+  }
+  .dist-features .container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+  }
+  .feature-card {
+    padding: 2rem;
+    background: var(--bg-card);
+    border-radius: 1rem;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    text-align: center;
+  }
+  .feature-card h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+  }
+  .feature-card p {
+    color: var(--text-secondary);
+  }
+</style>

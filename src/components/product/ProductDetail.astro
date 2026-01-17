@@ -1,0 +1,132 @@
+---
+const { product } = Astro.props;
+---
+
+<div class="bg-white dark:bg-gray-800 rounded-3xl p-6 md:p-10 shadow-sm border border-gray-100 dark:border-gray-700">
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+    <!-- Image Gallery -->
+    <div class="space-y-4">
+      <div class="aspect-square bg-gray-50 dark:bg-gray-900 rounded-2xl flex items-center justify-center p-8 border border-gray-100 dark:border-gray-800">
+        <img 
+          id="main-image"
+          src={product.images[0]} 
+          alt={product.name}
+          class="w-full h-full object-contain mix-blend-multiply dark:mix-blend-normal transition-opacity duration-300"
+        />
+      </div>
+      <div class="grid grid-cols-4 gap-4">
+        {/* Thumbnails */}
+        {product.images.concat(['/placeholder/product2.jpg', '/placeholder/product3.jpg', '/placeholder/product4.jpg']).slice(0, 4).map((img, i) => (
+          <button 
+            class="thumbnail-btn aspect-square bg-gray-50 dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-700 cursor-pointer hover:border-red-500 transition-all overflow-hidden p-2"
+            data-src={img}
+            aria-label={`View image ${i + 1}`}
+          >
+            <img src={img} alt="" class="w-full h-full object-contain mix-blend-multiply dark:mix-blend-normal" />
+          </button>
+        ))}
+      </div>
+    </div>
+
+    <!-- Product Info -->
+    <div class="flex flex-col">
+      <div class="mb-6">
+        <div class="flex items-center gap-2 mb-2">
+          {product.categories.map(cat => (
+             <span class="text-xs font-bold text-red-600 bg-red-50 dark:bg-red-900/30 px-2 py-1 rounded uppercase tracking-wider">
+               {cat.replace('-', ' ')}
+             </span>
+          ))}
+        </div>
+        <h1 class="text-3xl md:text-4xl font-extrabold text-gray-900 dark:text-white mb-4 leading-tight">
+          {product.name}
+        </h1>
+        <p class="text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
+          {product.shortDescription}
+        </p>
+      </div>
+
+      <div class="h-px w-full bg-gray-200 dark:bg-gray-700 my-6"></div>
+
+      <div class="space-y-6 mb-8">
+        <div>
+          <h3 class="text-sm font-bold text-gray-900 dark:text-white uppercase tracking-wider mb-3">Key Benefits</h3>
+          <ul class="space-y-2">
+            {product.benefits.map((benefit) => (
+              <li class="flex items-start text-gray-600 dark:text-gray-300">
+                <svg class="w-5 h-5 text-green-500 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                {benefit}
+              </li>
+            ))}
+          </ul>
+        </div>
+        
+        <div>
+          <h3 class="text-sm font-bold text-gray-900 dark:text-white uppercase tracking-wider mb-2">Description</h3>
+          <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
+            {product.fullDescription}
+          </p>
+        </div>
+      </div>
+
+      <div class="mt-auto">
+        <div class="flex items-center gap-4 mb-4">
+          <div class="text-2xl font-bold text-gray-900 dark:text-white">$29.99</div>
+          <div class="text-sm text-green-600 font-medium bg-green-50 dark:bg-green-900/30 px-2 py-1 rounded">In Stock</div>
+        </div>
+        
+        <div class="flex gap-4">
+          <button id="add-to-cart" class="flex-1 bg-red-600 text-white font-bold py-4 rounded-xl hover:bg-red-700 transition-colors shadow-lg shadow-red-600/20 active:scale-[0.98] transform">
+            Add to Cart
+          </button>
+          <button class="w-14 h-14 flex items-center justify-center border border-gray-200 dark:border-gray-700 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+            <svg class="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Image Gallery Logic
+  const mainImage = document.getElementById('main-image');
+  const thumbnails = document.querySelectorAll('.thumbnail-btn');
+
+  thumbnails.forEach(thumb => {
+    thumb.addEventListener('click', () => {
+      const newSrc = thumb.getAttribute('data-src');
+      if (mainImage && newSrc) {
+        // Fade out
+        mainImage.style.opacity = '0.5';
+        
+        setTimeout(() => {
+          mainImage.setAttribute('src', newSrc);
+          // Fade in
+          mainImage.style.opacity = '1';
+        }, 150);
+        
+        // Update active state
+        thumbnails.forEach(t => t.classList.remove('border-red-500', 'ring-2', 'ring-red-500/20'));
+        thumb.classList.add('border-red-500', 'ring-2', 'ring-red-500/20');
+      }
+    });
+  });
+
+  // Add to Cart Logic
+  const addToCartBtn = document.getElementById('add-to-cart');
+  if (addToCartBtn) {
+    addToCartBtn.addEventListener('click', () => {
+      const originalText = addToCartBtn.innerText;
+      addToCartBtn.innerText = 'Added!';
+      addToCartBtn.classList.add('bg-green-600', 'hover:bg-green-700');
+      addToCartBtn.classList.remove('bg-red-600', 'hover:bg-red-700', 'shadow-red-600/20');
+      
+      setTimeout(() => {
+        addToCartBtn.innerText = originalText;
+        addToCartBtn.classList.remove('bg-green-600', 'hover:bg-green-700');
+        addToCartBtn.classList.add('bg-red-600', 'hover:bg-red-700', 'shadow-red-600/20');
+      }, 2000);
+    });
+  }
+</script>

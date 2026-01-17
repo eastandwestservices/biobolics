@@ -1,27 +1,63 @@
 ---
+import '../../styles/globals.css'; 
 import Header from './Header.astro';
 import Footer from './Footer.astro';
+import Seo from './Seo.astro';
+import ScrollToTop from './ScrollToTop.astro';
 
-const { title = 'Biobolics' } = Astro.props;
+const { title } = Astro.props;
 ---
 
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <Seo title={title} />
     <title>{title}</title>
-    <link rel="stylesheet" href="/assets/styles/globals.css" />
+
+    <!-- Theme color for mobile browsers -->
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0B1D33" media="(prefers-color-scheme: dark)" />
+
+    <!-- Dark mode setup -->
+    <script is:inline>
+      const theme = localStorage.getItem('theme');
+      if (theme === 'dark' || (!theme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+      }
+    </script>
+
+    <!-- AOS CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet" />
   </head>
-  <body>
-    <!-- Header -->
+
+  <body class="w-full min-h-screen flex flex-col m-0 p-0 bg-bg text-text transition-colors duration-300">
     <Header />
 
-    <!-- Main Content -->
-    <main class="site-main">
+    <main class="flex-grow w-full m-0 p-0 overflow-x-hidden">
       <slot />
     </main>
 
-    <!-- Footer -->
+    <ScrollToTop />
     <Footer />
+
+    <!-- AOS JS -->
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+
+    <script is:inline>
+      // Safe client-side initialization for AOS
+      document.addEventListener('DOMContentLoaded', () => {
+        AOS.init({
+          duration: 800,
+          easing: 'ease-out',
+          once: true,
+          offset: 50
+        });
+      });
+    </script>
   </body>
 </html>

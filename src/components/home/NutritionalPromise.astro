@@ -1,0 +1,227 @@
+<section class="nutritional-promise">
+  <div class="circle-container reveal">
+    <div class="ball-wrapper" data-text="Supports vision and immune health">
+      <img src="/images/vitamins/a.webp" class="vitamin-ball" alt="Vitamin A" />
+    </div>
+    <div class="ball-wrapper" data-text="Supports metabolism and energy">
+      <img src="/images/vitamins/b.webp" class="vitamin-ball" alt="Vitamin B" />
+    </div>
+    <div class="ball-wrapper" data-text="Helps energy production and skin health">
+      <img src="/images/vitamins/b2.webp" class="vitamin-ball" alt="Vitamin B2" />
+    </div>
+    <div class="ball-wrapper" data-text="Supports brain function and immunity">
+      <img src="/images/vitamins/b6.webp" class="vitamin-ball" alt="Vitamin B6" />
+    </div>
+    <div class="ball-wrapper" data-text="Essential for nerve and blood health">
+      <img src="/images/vitamins/b12.webp" class="vitamin-ball" alt="Vitamin B12" />
+    </div>
+    <div class="ball-wrapper" data-text="Supports immunity and antioxidant defense">
+      <img src="/images/vitamins/c.webp" class="vitamin-ball" alt="Vitamin C" />
+    </div>
+    <div class="ball-wrapper" data-text="Supports bone strength and immunity">
+      <img src="/images/vitamins/d.webp" class="vitamin-ball" alt="Vitamin D" />
+    </div>
+    <div class="ball-wrapper" data-text="Supports bone and heart health">
+      <img src="/images/vitamins/k.webp" class="vitamin-ball" alt="Vitamin K" />
+    </div>
+
+    <img src="/images/vitamins/leaf.webp" class="circle-center-image" alt="Leaf" />
+    <div class="vitamin-tooltip"></div>
+  </div>
+
+  <div class="description reveal">
+    <h2>Nutritional Promise</h2>
+    <p>Our formulations provide targeted nutritional support for overall wellness and daily vitality.</p>
+    <p>Each ingredient is selected for quality, with precise dosages informed by scientific research.</p>
+    <p>Designed to complement a balanced lifestyle, supporting energy, immunity, and long-term health.</p>
+    <p>Trusted, reliable nutrition that fits seamlessly into your daily routine.</p>
+
+    <button class="cta-button">Explore</button>
+  </div>
+</section>
+
+<script>
+if (typeof window !== 'undefined') {
+  const container = document.querySelector('.circle-container');
+  const balls = Array.from(container.querySelectorAll('.ball-wrapper'));
+  const tooltip = container.querySelector('.vitamin-tooltip');
+
+  let angleOffset = 0;
+  let raf;
+  let paused = false;
+
+  function rotateBalls() {
+    const baseRadius = container.offsetWidth / 2 - 40;
+    const total = balls.length;
+
+    balls.forEach((wrapper, i) => {
+      const angle = ((360 / total) * i + angleOffset) * (Math.PI / 180);
+      let radius = baseRadius;
+
+      if (window.innerWidth <= 600) {
+        radius *= 1.2;
+      }
+
+      const x = radius * Math.cos(angle);
+      const y = radius * Math.sin(angle);
+
+      // Always keep translate position, only append scale if hovered
+      let scale = wrapper.dataset.hovered === 'true' ? 2 : 1;
+      wrapper.style.transform = `translate(${x}px, ${y}px) translate(-50%, -50%) scale(${scale})`;
+    });
+
+    angleOffset += 0.16; // slow rotation
+    if (!paused) raf = requestAnimationFrame(rotateBalls);
+  }
+
+  rotateBalls();
+
+  balls.forEach(wrapper => {
+    const ball = wrapper.querySelector('.vitamin-ball');
+
+    wrapper.addEventListener('mouseenter', () => {
+      paused = true;
+      cancelAnimationFrame(raf);
+
+      wrapper.dataset.hovered = 'true';
+
+      tooltip.textContent = wrapper.dataset.text;
+      tooltip.style.opacity = '1';
+
+      const rect = wrapper.getBoundingClientRect();
+      const containerRect = container.getBoundingClientRect();
+      const left = rect.left + rect.width / 2 - containerRect.left;
+      const top = rect.top - containerRect.top - 28;
+
+      tooltip.style.left = `${left}px`;
+      tooltip.style.top = `${top}px`;
+    });
+
+    wrapper.addEventListener('mouseleave', () => {
+      wrapper.dataset.hovered = 'false';
+      paused = false;
+      rotateBalls();
+      tooltip.style.opacity = '0';
+    });
+  });
+
+  // Reveal animation
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      entry.target.classList.toggle('is-visible', entry.isIntersecting);
+    });
+  }, { threshold: 0.15 });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+}
+</script>
+
+<style>
+.nutritional-promise {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 96px 32px;
+  text-align: center;
+}
+
+.circle-container {
+  position: relative;
+  width: 360px;
+  height: 360px;
+  margin-bottom: 40px;
+}
+
+.ball-wrapper {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(1);
+  z-index: 10;
+  transition: transform 0.25s ease;
+}
+
+.vitamin-ball {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+@media(min-width:1025px) {
+  .vitamin-ball { width:48px; height:48px; }
+}
+
+.circle-center-image {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 180px;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.vitamin-tooltip {
+  position: absolute;
+  transform: translate(-50%, -100%);
+  background: rgba(10,15,42,0.96);
+  color: #fff;
+  padding: 10px 16px;
+  border-radius: 10px;
+  font-size: 1.25rem;
+  font-weight: 600;
+  opacity: 0;
+  z-index: 999;
+  pointer-events: none;
+  max-width: 240px;
+  text-align: center;
+}
+
+.description {
+  max-width: 750px;
+  text-align: center;
+}
+
+.description h2 { font-size:3.64rem; margin-bottom:24px; }
+.description p { font-size:1.3rem; line-height:1.6; margin-bottom:12px; }
+
+.cta-button {
+  margin-top:30px;
+  padding:14px 36px;
+  font-size:1.3rem;
+  font-weight:700;
+  color:#fff;
+  background: linear-gradient(to bottom, #ff0000, #cc0000);
+  border:none;
+  border-radius:8px;
+  cursor:pointer;
+}
+
+.cta-button:hover {
+  background: linear-gradient(to bottom, #d6d6d6, #eeeeee);
+  color:#0b1c41;
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.8s cubic-bezier(0.22,1,0.36,1);
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media(max-width:900px){
+  .circle-container{width:280px;height:280px;}
+  .circle-center-image{width:140px;}
+  .description h2{font-size:2.8rem;}
+  .description p{font-size:1.2rem;line-height:1.5;}
+}
+@media(max-width:600px){
+  .circle-container{width:220px;height:220px;}
+  .circle-center-image{width:120px;}
+  .description h2{font-size:2.2rem;}
+  .description p{font-size:1.05rem;line-height:1.5;}
+}
+</style>

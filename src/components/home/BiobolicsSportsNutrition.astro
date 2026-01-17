@@ -1,0 +1,279 @@
+<section id="biobolics-sports-nutrition" class="sports-nutrition-section"> 
+  <div class="sports-container">
+
+    <!-- LEFT IMAGE -->
+    <div class="left-image reveal-left">
+      <img
+        src="/images/wellness-main.webp"
+        alt="Biobolics Sports Nutrition"
+      />
+    </div>
+
+    <!-- RIGHT CONTENT -->
+    <div class="right-content reveal-right">
+      <h2 class="section-heading">
+        Biobolics Sports Nutrition
+      </h2>
+
+      <p class="description">
+        Biobolics Sports Nutrition is formulated to support strength, endurance, and recovery through scientifically selected nutrients. Each formulation is developed with controlled sourcing, lab validation, and performance consistency to support active and demanding lifestyles.
+      </p>
+
+      <!-- ICONS -->
+      <div class="icon-row">
+        <div class="icon-item">
+          <img src="/icons/energy.svg" alt="Energy" />
+          <span class="icon-tooltip">Energy</span>
+        </div>
+
+        <div class="icon-item">
+          <img src="/icons/immunity.svg" alt="Immunity" />
+          <span class="icon-tooltip">Immunity</span>
+        </div>
+
+        <div class="icon-item">
+          <img src="/icons/muscle.svg" alt="Muscle" />
+          <span class="icon-tooltip">Muscle Support</span>
+        </div>
+
+        <div class="icon-item">
+          <img src="/icons/strength.svg" alt="Strength" />
+          <span class="icon-tooltip">Strength</span>
+        </div>
+
+        <div class="icon-item">
+          <img src="/icons/protection.svg" alt="Protection" />
+          <span class="icon-tooltip">Protection</span>
+        </div>
+      </div>
+
+      <!-- EMAIL (LEFT BOTTOM FEEL, +100% SIZE) -->
+      <div class="micro-text">
+        <img src="/icons/email.svg" alt="Email" />
+        <span>info@biobolics.com</span>
+      </div>
+
+      <!-- CTA -->
+      <div class="cta-wrapper">
+        <span class="cta-button">LEARN MORE</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<script>
+if (typeof window !== 'undefined') {
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        entry.target.classList.toggle('is-visible', entry.isIntersecting);
+      });
+    },
+    { threshold: 0.15 }
+  );
+
+  document
+    .querySelectorAll('.reveal-left, .reveal-right')
+    .forEach(el => observer.observe(el));
+}
+</script>
+
+<style>
+/* ===============================
+   ROOT AUTO COLOR (DARK MODE SAFE)
+================================ */
+.sports-nutrition-section {
+  --text-main: #ffffff;
+  --text-muted: rgba(255,255,255,0.85);
+  --tooltip-bg: rgba(10,15,42,0.95);
+}
+
+/* ===============================
+   SECTION
+================================ */
+.sports-nutrition-section {
+  width: 100%;
+  padding: 6rem 0;
+  background: #000033;
+  color: var(--text-main);
+}
+
+.sports-container {
+  display: flex;
+  align-items: stretch;
+  width: 100%;
+}
+
+/* ===============================
+   LEFT
+================================ */
+.left-image {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.left-image img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* ===============================
+   RIGHT
+================================ */
+.right-content {
+  flex: 1;
+  padding: 3rem 125px 3rem 2.5rem;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ===============================
+   TYPOGRAPHY
+================================ */
+.section-heading {
+  font-size: 3.64rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+}
+
+.description {
+  font-size: 1.3rem;
+  line-height: 1.7;
+  color: var(--text-muted);
+  margin-bottom: 2.2rem;
+}
+
+/* ===============================
+   ICONS
+================================ */
+.icon-row {
+  display: flex;
+  gap: 2.8rem;
+  margin-bottom: 1.6rem;
+}
+
+.icon-item {
+  position: relative;
+}
+
+.icon-item img {
+  width: 72px;
+  height: 72px;
+  transition: transform 0.35s ease, filter 0.35s ease;
+}
+
+.icon-item:hover img {
+  transform: translateY(-3px);
+}
+
+.icon-tooltip {
+  position: absolute;
+  bottom: -38px;
+  padding: 6px 12px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  background: var(--tooltip-bg);
+  color: #ffffff;
+  border-radius: 8px;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: all 0.3s ease;
+}
+
+.icon-item:hover .icon-tooltip {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ===============================
+   EMAIL (+100% SIZE)
+================================ */
+.micro-text {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 1.7rem;
+  font-weight: 500;
+  margin-bottom: 2rem;
+  opacity: 0.95;
+}
+
+.micro-text img {
+  width: 28px;
+  height: 28px;
+}
+
+/* ===============================
+   PREMIUM CTA (COPIED LOGIC)
+================================ */
+.cta-wrapper {
+  margin-top: auto;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.cta-button {
+  padding: 0.75rem 2.4rem;
+  font-size: 1.05rem;
+  font-family: 'Montserrat', system-ui, sans-serif;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  color: #0a0f2a;
+  background: linear-gradient(145deg, #f2f2f2, #d6d6d6);
+  border-radius: 999px;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.9),
+    0 12px 30px rgba(0,0,0,0.35);
+  transition: all 0.4s ease;
+}
+
+.cta-button:hover {
+  background: linear-gradient(145deg, #ff2b2b, #c90000);
+  color: #ffffff;
+  transform: translateY(-2px);
+}
+
+/* ===============================
+   REVEAL
+================================ */
+.reveal-left {
+  opacity: 0;
+  transform: translateX(-60px);
+  transition: all 0.8s cubic-bezier(0.22,1,0.36,1);
+}
+
+.reveal-right {
+  opacity: 0;
+  transform: translateX(60px);
+  transition: all 0.8s cubic-bezier(0.22,1,0.36,1);
+}
+
+.is-visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* ===============================
+   MOBILE
+================================ */
+@media (max-width: 768px) {
+  .sports-container {
+    flex-direction: column;
+  }
+
+  .right-content {
+    padding: 2rem;
+  }
+
+  .section-heading {
+    font-size: 2.2rem;
+  }
+
+  .cta-wrapper {
+    justify-content: center;
+  }
+}
+</style>

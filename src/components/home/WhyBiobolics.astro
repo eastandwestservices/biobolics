@@ -1,38 +1,144 @@
 ---
-import "../../assets/styles/home.css";
+const features = [
+  {
+    title: "Science-Backed Formulations",
+    description: "Developed through scientific research for proven efficacy.",
+    icon: "/icons/why-biobolics/science.svg"
+  },
+  {
+    title: "Premium Quality Ingredients",
+    description: "Only the highest-grade ingredients go into our products.",
+    icon: "/icons/why-biobolics/quality.svg"
+  },
+  {
+    title: "Transparent Labeling",
+    description: "Clear ingredients and dosages with no hidden blends.",
+    icon: "/icons/why-biobolics/transparency.svg"
+  },
+  {
+    title: "Commitment to Wellness",
+    description: "Focused on long-term health and performance.",
+    icon: "/icons/why-biobolics/commitment.svg"
+  }
+];
 ---
 
 <section class="why-biobolics">
-  <div class="why-container">
-    <h2 class="why-title">Why Biobolics</h2>
-    <p class="why-subtitle">
-      Science-backed nutrition you can trust.
-    </p>
+  <!-- RESTORED HEADING -->
+  <h2 class="section-heading reveal">
+    Why Choose Biobolics?
+  </h2>
 
-    <div class="why-grid">
-      <div class="why-card">
-        <div class="why-icon">🧪</div>
-        <h3>Clinically Inspired Formulas</h3>
-        <p>
-          Developed using modern nutritional science to support real health outcomes.
-        </p>
+  <div class="features-grid">
+    {features.map((item, index) => (
+      <div
+        class="feature-card reveal"
+        style={`transition-delay:${index * 120}ms`}
+      >
+        <img src={item.icon} alt={item.title} class="feature-icon" />
+        <div class="feature-text">
+          <h3>{item.title}</h3>
+          <p>{item.description}</p>
+        </div>
       </div>
-
-      <div class="why-card">
-        <div class="why-icon">🌿</div>
-        <h3>Premium Quality Ingredients</h3>
-        <p>
-          Clean, tested, and responsibly sourced ingredients in every product.
-        </p>
-      </div>
-
-      <div class="why-card">
-        <div class="why-icon">🤝</div>
-        <h3>Trusted by Professionals</h3>
-        <p>
-          Chosen by distributors, athletes, and wellness-focused customers.
-        </p>
-      </div>
-    </div>
+    ))}
   </div>
 </section>
+
+<script>
+  if (typeof window !== 'undefined') {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+          } else {
+            // Remove class when scrolling out, so animation repeats
+            entry.target.classList.remove('is-visible');
+          }
+        });
+      },
+      { threshold: 0.15 }
+    );
+
+    document
+      .querySelectorAll('.reveal')
+      .forEach((el) => observer.observe(el));
+  }
+</script>
+
+<style>
+/* SECTION */
+.why-biobolics {
+  padding: 96px 32px;
+  text-align: center;
+}
+
+/* RESTORED HEADING SIZE */
+.section-heading {
+  font-size: 3.64rem; /* ORIGINAL SIZE RESTORED */
+  font-weight: 700;
+  margin-bottom: 60px;
+}
+
+/* GRID */
+.features-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 50px;
+}
+
+/* FEATURE CARD */
+.feature-card {
+  width: 286px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* ICON */
+.feature-icon {
+  width: 83px;
+  height: 83px;
+  margin-bottom: 20px;
+}
+
+/* TEXT */
+.feature-text h3 {
+  font-size: 1.69rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.feature-text p {
+  font-size: 1.3rem;
+  line-height: 1.4;
+}
+
+/* ANIMATION BASE */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition:
+    opacity 0.8s cubic-bezier(0.22,1,0.36,1),
+    transform 0.8s cubic-bezier(0.22,1,0.36,1);
+}
+
+/* ACTIVE */
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  .feature-card { width: 45%; }
+  .section-heading { font-size: 2.6rem; }
+}
+
+@media (max-width: 600px) {
+  .feature-card { width: 100%; }
+  .section-heading { font-size: 2.2rem; }
+}
+</style>

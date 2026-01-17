@@ -1,198 +1,180 @@
 ---
-const brands = [
-  { 
-    title: "Biobolics Sports",
-    label: "Bio Sports",
-    frontImage: "/brands/sports-front.webp",
-    backImage: "/brands/sports-back.webp",
-    description: "Performance supplements for athletes.",
-    link: "/brand/sports",
-    btnClass: "btn-sports"
-  },
-  { 
-    title: "Biobolics Vitamins",
-    label: "Bio Vitamins",
-    frontImage: "/brands/vitamins-front.webp",
-    backImage: "/brands/vitamins-back.webp",
-    description: "Essential daily vitamins for wellness.",
-    link: "/brand/vitamins",
-    btnClass: "btn-vitamins"
-  },
-  { 
-    title: "Biobolics Gummies",
-    label: "Bio Gummies",
-    frontImage: "/brands/gummies-front.webp",
-    backImage: "/brands/gummies-back.webp",
-    description: "Tasty gummies packed with nutrients.",
-    link: "/brand/gummies",
-    btnClass: "btn-gummies"
-  },
-  { 
-    title: "Rite Stevia",
-    label: "Rite Stevia",
-    frontImage: "/brands/stevia-front.webp",
-    backImage: "/brands/stevia-back.webp",
-    description: "Natural sweetener for a healthy lifestyle.",
-    link: "/brand/stevia",
-    btnClass: "btn-stevia"
-  },
-];
+import brands from '@/lib/brands';
+
+const brandsData = brands.map((b) => ({
+  slug: b.slug,
+  label:
+    b.slug === 'sports' ? 'SPORTS' :
+    b.slug === 'vitamins' ? 'VITAMINS' :
+    b.slug === 'gummies' ? 'GUMMIES' :
+    b.slug === 'stevia' ? 'STEVIA' : '',
+  slides: [
+    `/brands/${b.slug}-1.webp`,
+    `/brands/${b.slug}-2.webp`,
+    `/brands/${b.slug}-3.webp`,
+    `/brands/${b.slug}-4.webp`
+  ],
+  link: `/brand/${b.slug}`
+}));
 ---
 
 <section class="brand-panels">
-  {brands.map((brand) => (
-    <div class="brand-card-wrapper">
-      <div class="card-inner">
+  {brandsData.map((brand) => (
+    <a href={brand.link} class="brand-card">
 
-        <!-- FRONT -->
-        <div class="card-face card-front">
-          <img src={brand.frontImage} alt={brand.title} />
-
-          <!-- FRONT LABEL -->
-          <div class={`front-label ${brand.btnClass}`}>
-            {brand.label}
-          </div>
-        </div>
-
-        <!-- BACK -->
-        <div class="card-face card-back">
-          <img src={brand.backImage} alt={brand.title + " Back"} />
-
-          <div class="back-overlay">
-            <p>{brand.description}</p>
-            <a href={brand.link} class={`back-btn ${brand.btnClass}`}>
-              Enter
-            </a>
-          </div>
-        </div>
-
+      <!-- SLIDER -->
+      <div class="slider" data-slider>
+        {brand.slides.map((img, i) => (
+          <img src={img} alt={brand.label} class={i === 0 ? 'active' : ''} />
+        ))}
+        <div class="progress-bar"></div>
       </div>
-    </div>
+
+      <!-- CTA -->
+      <div class="cta-wrapper">
+        <span class="cta-button">VISIT NOW</span>
+      </div>
+
+    </a>
   ))}
 </section>
 
-<script>
-  document.querySelectorAll('.brand-card-wrapper').forEach(card => {
-    card.addEventListener('click', e => {
-      if (e.target.closest('.back-btn')) return;
-      if (window.matchMedia('(hover: none)').matches) {
-        e.preventDefault();
-        card.classList.toggle('is-flipped');
-      }
-    });
-  });
-</script>
-
 <style>
+/* ===============================
+   GRID
+================================ */
 .brand-panels {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 2rem;
   padding: 2rem;
 }
 
-.brand-card-wrapper {
-  height: 470px;
-  perspective: 1500px;
+/* ===============================
+   CARD
+================================ */
+.brand-card {
+  position: relative;
+  height: 480px;
+  border-radius: 18px;
+  overflow: hidden;
+  text-decoration: none;
+  box-shadow: 0 14px 35px rgba(0,0,0,0.28);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
 }
 
-.card-inner {
+.brand-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 26px 60px rgba(0,0,0,0.45);
+}
+
+/* ===============================
+   SLIDER
+================================ */
+.slider {
+  position: relative;
   width: 100%;
   height: 100%;
-  position: relative;
-  transition: transform 0.8s ease;
-  transform-style: preserve-3d;
-  border-radius: 1.5rem;
 }
 
-.brand-card-wrapper:hover .card-inner {
-  transform: rotateY(180deg);
-}
-
-.brand-card-wrapper.is-flipped .card-inner {
-  transform: rotateY(180deg);
-}
-
-.card-face {
+.slider img {
   position: absolute;
   inset: 0;
-  backface-visibility: hidden;
-  border-radius: 1.5rem;
-  overflow: hidden;
-}
-
-.card-face img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  opacity: 0;
+  transition: opacity 1.8s ease-in-out;
 }
 
-/* ✅ FRONT LABEL — 20% SMALLER, BOTTOM-CENTER, SINGLE LINE */
-.front-label {
+.slider img.active {
+  opacity: 1;
+}
+
+/* ===============================
+   PROGRESS BAR
+================================ */
+.progress-bar {
   position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 2px;
+  width: 0%;
+  background: linear-gradient(to right, #ff2b2b, #ff6a6a);
+}
+
+/* ===============================
+   CTA
+================================ */
+.cta-wrapper {
+  position: absolute;
+  bottom: 2rem;
   left: 50%;
-  bottom: 1.5rem;
   transform: translateX(-50%);
+  z-index: 5;
+}
 
-  padding: 0.76rem 1.52rem;   /* overall size reduced 20% */
-  font-size: 1.28rem;        /* 20% smaller */
-  font-family: "Square721BT", sans-serif;
-  font-weight: 700;
-  color: white;
-  white-space: nowrap;
-
-  border-radius: 0.68rem;
+.cta-button {
+  padding: 0.75rem 2.4rem;
+  font-size: 1.05rem;
+  font-family: 'Montserrat', system-ui, sans-serif;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  color: #0a0f2a;
+  background: linear-gradient(145deg, #f2f2f2, #d6d6d6);
+  border-radius: 999px;
   box-shadow:
-    inset 0 1px 3px rgba(255,255,255,0.45),
-    inset 0 -3px 6px rgba(0,0,0,0.65);
+    inset 0 1px 0 rgba(255,255,255,0.9),
+    0 12px 30px rgba(0,0,0,0.35);
+  transition: all 0.4s ease;
 }
 
-/* BACK */
-.card-back {
-  transform: rotateY(180deg);
+.brand-card:hover .cta-button {
+  background: linear-gradient(145deg, #ff2b2b, #c90000);
+  color: #ffffff;
+  transform: translateY(-2px);
 }
 
-.card-back img {
-  position: absolute;
-  inset: 0;
+/* ===============================
+   RESPONSIVE
+================================ */
+@media (max-width: 1024px) {
+  .brand-card { height: 440px; }
 }
 
-.back-overlay {
-  position: absolute;
-  bottom: 1.5rem;
-  width: 100%;
-  text-align: center;
-  z-index: 2;
-  color: white;
-  font-family: "Square721BT", sans-serif;
-  background: rgba(0,0,0,0.2);
-  padding: 0.6rem;
+@media (max-width: 768px) {
+  .brand-panels { grid-template-columns: 1fr; }
+  .brand-card { height: 400px; }
 }
 
-.back-btn {
-  display: inline-block;
-  margin-top: 0.6rem;
-  padding: 0.55rem 1.3rem;
-  font-family: "Square721BT", sans-serif;
-  border-radius: 0.6rem;
-  color: white;
-  border: 1px solid rgba(255,255,255,0.3);
-}
-
-/* BRAND GRADIENTS */
-.btn-sports {
-  background: linear-gradient(to bottom, #000, #cfcfcf);
-}
-
-.btn-vitamins {
-  background: linear-gradient(to bottom, #c62828, #4a0000);
-}
-
-.btn-gummies {
-  background: linear-gradient(to bottom, #4fc3f7, #0d47a1);
-}
-
-.btn-stevia {
-  background: linear-gradient(to bottom, #7ed957, #0b3d0b);
+@media (max-width: 480px) {
+  .brand-card { height: 340px; }
+  .cta-button { font-size: 0.95rem; }
 }
 </style>
+
+<script type="module">
+document.querySelectorAll('[data-slider]').forEach(slider => {
+  const slides = slider.querySelectorAll('img');
+  const bar = slider.querySelector('.progress-bar');
+  let index = 0;
+  const duration = 6000;
+
+  function showSlide(i) {
+    slides.forEach(s => s.classList.remove('active'));
+    slides[i].classList.add('active');
+    bar.style.transition = 'none';
+    bar.style.width = '0%';
+    requestAnimationFrame(() => {
+      bar.style.transition = `width ${duration}ms linear`;
+      bar.style.width = '100%';
+    });
+  }
+
+  showSlide(index);
+  setInterval(() => {
+    index = (index + 1) % slides.length;
+    showSlide(index);
+  }, duration);
+});
+</script>

@@ -1,0 +1,72 @@
+---
+import ProductCard from './ProductCard.astro';
+const { products } = Astro.props;
+---
+
+<section class="category-products mt-24 py-12">
+  <!-- Section Heading -->
+  <div class="text-center mb-12">
+    <h1 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white">
+      Biobolics Nutrition
+    </h1>
+  </div>
+
+  <!-- Products Grid -->
+  {products && products.length > 0 ? (
+    <div class="product-grid">
+      {products.map((product) => (
+        <ProductCard
+          product={{
+            name: product.name,
+            image: `/categories/sports/${product.folder}.webp`,
+            link: `/products/sports/${product.folder}`,
+          }}
+        />
+      ))}
+    </div>
+  ) : (
+    <div class="text-center py-12 col-span-full">
+      <p class="text-xl text-gray-500 dark:text-gray-400">
+        Products coming soon
+      </p>
+    </div>
+  )}
+</section>
+
+<style>
+.category-products {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+/* Product Grid */
+.product-grid {
+  margin-top: 3rem; /* ✅ ONLY CHANGE: pushes cards down from heading */
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 columns desktop */
+  gap: 2rem;
+  justify-items: center;
+}
+
+/* Tablet: 2 columns */
+@media (max-width: 1024px) {
+  .product-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Mobile: 1 column, center items */
+@media (max-width: 768px) {
+  .product-grid {
+    grid-template-columns: 1fr;
+    justify-items: center;
+  }
+}
+
+/* Section Heading */
+.category-products h1 {
+  font-size: clamp(2rem, 4vw, 3rem); /* same as other sections */
+  line-height: 1.1;
+}
+</style>

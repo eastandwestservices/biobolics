@@ -1,0 +1,140 @@
+<section class="solution-products">
+  <!-- SECTION TITLE -->
+  <div class="title-wrap">
+    <h2>Solution-Based Products</h2>
+  </div>
+
+  <!-- Product 1 -->
+  <div class="solution-row">
+    <div class="image full-edge">
+      <img src="/products/sports/whey-protein.webp" alt="Whey Protein" />
+    </div>
+    <div class="content">
+      <h3>Whey Protein</h3>
+      <p>
+        Fast-absorbing, high-quality protein designed to accelerate muscle
+        recovery and support lean muscle growth.
+      </p>
+      <ul>
+        <li>Rapid digestion</li>
+        <li>High biological value</li>
+        <li>Supports muscle synthesis</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Product 2 (reversed layout) -->
+  <div class="solution-row reverse">
+    <div class="image full-edge">
+      <img src="/products/sports/creatine.webp" alt="Creatine" />
+    </div>
+    <div class="content">
+      <h3>Creatine Monohydrate</h3>
+      <p>
+        Clinically researched creatine that boosts power output, strength,
+        and high-intensity performance.
+      </p>
+      <ul>
+        <li>Increases ATP production</li>
+        <li>Improves strength</li>
+        <li>Enhances training intensity</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<style>
+.solution-products {
+  padding: 5rem 0;
+  background: transparent;
+}
+
+.title-wrap {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.title-wrap h2 {
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 800;
+  text-transform: uppercase;
+  color: var(--text-color);
+}
+
+/* Rows styling */
+.solution-row {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  margin-bottom: 4rem;
+  flex-wrap: wrap;
+}
+
+.solution-row.reverse {
+  flex-direction: row-reverse;
+}
+
+/* Images full edge */
+.image.full-edge {
+  flex: 1 1 50%;
+  margin: 0 calc(-50vw + 50%);
+  overflow: hidden;
+}
+
+.image.full-edge img {
+  width: 100vw;
+  max-width: 100vw;
+  height: auto;
+  display: block;
+  object-fit: cover;
+}
+
+/* Text content */
+.content {
+  flex: 1 1 50%;
+  color: var(--text-color);
+  padding: 2rem;
+}
+
+.content h3 {
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
+  font-weight: 800;
+  margin-bottom: 1rem;
+}
+
+.content p {
+  margin-bottom: 1rem;
+}
+
+.content ul {
+  padding-left: 1.2rem;
+}
+
+.content li {
+  margin-bottom: 0.4rem;
+}
+
+/* =========================
+   RESPONSIVE
+========================== */
+@media (max-width: 1024px) {
+  .solution-row,
+  .solution-row.reverse {
+    flex-direction: column;
+  }
+
+  .image.full-edge {
+    margin: 0;
+    width: 100%;
+  }
+
+  .image.full-edge img {
+    width: 100%;
+  }
+
+  .content {
+    text-align: center;
+    padding: 1rem 0;
+  }
+}
+</style>

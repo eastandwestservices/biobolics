@@ -1,0 +1,334 @@
+---
+// SportsBrandHero.astro
+const heroImages = [
+  "/hero-figures/sports-hero-1.webp",
+  "/hero-figures/sports-hero-2.webp",
+  "/hero-figures/sports-hero-3.webp",
+  "/hero-figures/sports-hero-4.webp",
+  "/hero-figures/sports-hero-5.webp" // ✅ ADDED (ONLY)
+];
+const hexagonImage = "/brands/sports/brand-hexagon.svg";
+---
+
+<section class="sports-hero relative w-full flex items-center justify-center bg-gradient-to-b from-[#0b1d33] to-[#020b18]">
+
+  <!-- Hero Image (LOCKED) -->
+  <div class="hero-image-wrapper relative z-10 w-full h-full overflow-hidden">
+    {heroImages.map((img, index) => (
+      <img
+        src={img}
+        alt={`Sports Hero ${index + 1}`}
+        class={`hero-image ${index === 0 ? 'active' : ''}`}
+        data-hero-image
+      />
+    ))}
+
+    <!-- ✅ MINIMAL PAUSE BUTTON (ADDED ONLY) -->
+    <button class="hero-pause-btn" data-hero-pause aria-label="Pause hero">
+      <span></span>
+      <span></span>
+    </button>
+
+    <!-- Canvas for molecular particles (LOCKED) -->
+    <canvas id="moleculeParticles" class="molecule-canvas" aria-hidden="true"></canvas>
+
+    <!-- Banner Text (LOCKED) -->
+    <div class="hero-banner-text absolute z-30 w-full flex justify-center bottom-10 pointer-events-none">
+      <span>ADVANCE YOUR BODY</span>
+    </div>
+  </div>
+
+  <!-- Hexagon at Bottom (LOCKED) -->
+  <div class="hero-hexagon absolute left-1/2 bottom-0 z-20 pointer-events-none">
+    <img src={hexagonImage} alt="Brand Hexagon" class="w-full h-auto" />
+  </div>
+
+</section>
+
+<style>
+/* ===============================
+   HERO SECTION (LOCKED)
+================================= */
+.sports-hero {
+  position: relative;
+  width: 100%;
+  overflow: visible;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* ===============================
+   HERO IMAGE (LOCKED)
+================================= */
+.hero-image-wrapper {
+  width: 100%;
+  height: 100%;
+  min-height: 500px;
+  overflow: hidden;
+  position: relative;
+}
+
+@media (min-width: 1024px) {
+  .hero-image-wrapper {
+    min-height: 70vh;
+  }
+}
+
+.hero-image {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover;
+  opacity: 0;
+  z-index: 0;
+
+  /* 🔒 ONLY CHANGE: luxury slow fade */
+  transition: opacity 10s ease-in-out;
+
+  will-change: opacity;
+}
+
+.hero-image.active {
+  opacity: 1;
+  z-index: 10;
+}
+
+/* ===============================
+   PAUSE BUTTON (ADDED ONLY)
+================================= */
+.hero-pause-btn {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  z-index: 40;
+  background: transparent;
+  border: 0;
+  display: flex;
+  gap: 4px;
+  cursor: pointer;
+  padding: 0;
+}
+
+.hero-pause-btn span {
+  width: 3px;
+  height: 16px;
+  background: rgba(255,255,255,0.75);
+}
+
+/* ===============================
+   HEXAGON (LOCKED)
+================================= */
+.hero-hexagon {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%) translateY(50%);
+  z-index: 20;
+  pointer-events: none;
+  width: 12rem;
+}
+
+.hero-hexagon img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* ===============================
+   PARTICLE CANVAS (LOCKED)
+================================= */
+.molecule-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 15;
+  pointer-events: none;
+}
+
+/* ===============================
+   BANNER TEXT (LOCKED)
+================================= */
+.hero-banner-text span {
+  font-family: 'Montserrat', system-ui, -apple-system, sans-serif;
+  font-weight: 500;
+  font-size: clamp(1rem, 1.5vw, 1.25rem);
+  color: #ffffff;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  text-align: center;
+}
+
+/* ===============================
+   RESPONSIVE HEXAGON (LOCKED)
+================================= */
+@media (max-width: 1024px) {
+  .hero-hexagon {
+    width: 32vw;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-hexagon {
+    width: 40vw;
+  }
+}
+</style>
+
+<script>
+/* ===============================
+   PARTICLE SCRIPT (LOCKED — VERBATIM)
+================================= */
+(function() {
+  const canvas = document.getElementById("moleculeParticles");
+  if (!canvas) return;
+  const ctx = canvas.getContext("2d");
+  if (!ctx) return;
+
+  const hexagon = document.querySelector(".hero-hexagon");
+  let hexCenter = { x: window.innerWidth / 2, y: 0 };
+
+  function updateHexCenter() {
+    if (hexagon) {
+      const rect = hexagon.getBoundingClientRect();
+      hexCenter.x = rect.left + rect.width / 2;
+      hexCenter.y = rect.top + rect.height * 0.15;
+    }
+  }
+
+  let particles = [];
+  const baseCount = window.innerWidth > 768 ? 40 : 20;
+  const mouse = { x: 0, y: 0 };
+
+  function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = document.querySelector(".hero-image-wrapper").offsetHeight;
+    updateHexCenter();
+  }
+
+  window.addEventListener("resize", () => {
+    resizeCanvas();
+    initParticles();
+  });
+
+  window.addEventListener("mousemove", (e) => {
+    const rect = canvas.getBoundingClientRect();
+    mouse.x = e.clientX - rect.left;
+    mouse.y = e.clientY - rect.top;
+  });
+
+  resizeCanvas();
+
+  function Particle(isRedLayer = false) {
+    this.isRedLayer = isRedLayer;
+
+    this.reset = function() {
+      this.x = hexCenter.x + (Math.random() - 0.5) * 100;
+      this.y = hexCenter.y + (Math.random() - 0.5) * 50;
+      this.radius = isRedLayer ? 3 + Math.random() * 4 : 2 + Math.random() * 3;
+      this.speedY = isRedLayer ? -0.5 - Math.random() * 0.6 : -0.25 - Math.random() * 0.6;
+      this.speedX = (Math.random() - 0.5) * 1;
+      this.alpha = isRedLayer ? 0.15 + Math.random() * 0.25 : 0.2 + Math.random() * 0.35;
+      this.color = isRedLayer
+        ? `rgba(225, 6, 0, ${this.alpha})`
+        : `rgba(255, 255, 255, ${this.alpha})`;
+    };
+
+    this.update = function() {
+      this.x += this.speedX;
+      this.y += this.speedY;
+
+      const dx = this.x - mouse.x;
+      const dy = this.y - mouse.y;
+      const dist = Math.sqrt(dx*dx + dy*dy);
+      if (dist < 120) {
+        const force = 200 / (dist*dist);
+        this.x += dx * force;
+        this.y += dy * force;
+      }
+
+      if (this.y < -10) this.reset();
+    };
+
+    this.draw = function() {
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+      ctx.fillStyle = this.color;
+      ctx.fill();
+
+      particles.forEach(p => {
+        const dx = this.x - p.x;
+        const dy = this.y - p.y;
+        const dist = Math.sqrt(dx*dx + dy*dy);
+        if (dist < 70) {
+          ctx.beginPath();
+          ctx.moveTo(this.x, this.y);
+          ctx.lineTo(p.x, p.y);
+          ctx.strokeStyle = this.isRedLayer
+            ? `rgba(225,6,0,0.1)`
+            : `rgba(255,255,255,0.1)`;
+          ctx.lineWidth = 1.3;
+          ctx.stroke();
+        }
+      });
+    };
+
+    this.reset();
+  }
+
+  function initParticles() {
+    particles = [];
+    for (let i = 0; i < baseCount; i++) particles.push(new Particle(false));
+    for (let i = 0; i < Math.floor(baseCount / 2); i++) particles.push(new Particle(true));
+  }
+
+  function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    particles.forEach(p => {
+      p.update();
+      p.draw();
+    });
+    requestAnimationFrame(animate);
+  }
+
+  initParticles();
+  animate();
+})();
+
+/* ===============================
+   HERO FADE LOGIC (LOCKED + PAUSE)
+================================= */
+(function() {
+  const wrapper = document.querySelector('.hero-image-wrapper');
+  if (!wrapper || wrapper.dataset.slideshowInit === "true") return;
+  wrapper.dataset.slideshowInit = "true";
+
+  const images = wrapper.querySelectorAll('[data-hero-image]');
+  const pauseBtn = wrapper.querySelector('[data-hero-pause]');
+  if (images.length <= 1) return;
+
+  let currentIndex = 0;
+  let paused = false;
+
+  const intervalTime = 12000; // 🔒 ultra-slow cinematic
+
+  images.forEach((img, i) => {
+    if (i === 0) img.classList.add('active');
+    else img.classList.remove('active');
+  });
+
+  setInterval(() => {
+    if (paused) return;
+    const nextIndex = (currentIndex + 1) % images.length;
+    images[currentIndex].classList.remove('active');
+    images[nextIndex].classList.add('active');
+    currentIndex = nextIndex;
+  }, intervalTime);
+
+  pauseBtn.addEventListener('click', () => {
+    paused = !paused;
+  });
+})();
+</script>

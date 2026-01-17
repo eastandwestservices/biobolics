@@ -1,0 +1,189 @@
+---
+const { categories, selectedIndex, onSelect } = Astro.props;
+---
+
+<div class="category-wrapper">
+
+  <!-- MOBILE ONLY DROPDOWN -->
+  <div class="mobile-dropdown">
+    <select
+      class="category-select"
+      onChange={(e) => onSelect(Number(e.target.value))}
+      value={selectedIndex}
+    >
+      <option value="-1">All Categories</option>
+      {categories.map((cat, idx) => (
+        <option value={idx}>{cat.name}</option>
+      ))}
+    </select>
+  </div>
+
+  <!-- DESKTOP ONLY SIDEBAR -->
+  <aside class="categories">
+    <h3 class="category-heading">Categories</h3>
+
+    <ul>
+      <li
+        class={selectedIndex === -1 ? 'active' : ''}
+        onClick={() => onSelect(-1)}
+      >
+        <img src="/icons/hexagon.svg" alt="hexagon" class="cat-icon" />
+        <span>All Categories</span>
+      </li>
+
+      {categories.map((cat, idx) => (
+        <li
+          class={idx === selectedIndex ? 'active' : ''}
+          onClick={() => onSelect(idx)}
+        >
+          <img src="/icons/hexagon.svg" alt="hexagon" class="cat-icon" />
+          <span>{cat.name}</span>
+        </li>
+      ))}
+    </ul>
+  </aside>
+
+</div>
+
+<style>
+/* Wrapper */
+.category-wrapper {
+  width: 100%;
+}
+
+/* Sidebar heading */
+.category-heading {
+  font-size: 0.9rem; /* base size for mobile */
+  text-transform: uppercase;
+  margin-bottom: 0.75rem;
+  font-weight: 700;
+}
+
+/* Desktop Sidebar – PREMIUM RED OUTLINE + Inner Gradient */
+.categories {
+  width: 280px;
+  position: sticky;
+  top: 226px;
+
+  border: 2px solid #e10600; /* Red outline */
+  border-radius: 14px;
+  padding: 1.5rem 1.25rem;
+
+  /* Subtle inner gradient glow */
+  background: linear-gradient(
+    145deg,
+    rgba(255, 230, 230, 0.05),
+    rgba(255, 255, 255, 0.1)
+  );
+
+  /* Shadow for depth */
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.05);
+
+  /* Smooth transition for hover pulse */
+  transition: background 1.5s ease-in-out;
+}
+
+/* Hover pulse for glow (desktop only) */
+@media (min-width: 769px) {
+  .categories:hover {
+    background: linear-gradient(
+      145deg,
+      rgba(255, 230, 230, 0.12),
+      rgba(255, 255, 255, 0.18)
+    );
+  }
+}
+
+/* Dark mode */
+@media (prefers-color-scheme: dark) {
+  .categories {
+    background: linear-gradient(
+      145deg,
+      rgba(255, 0, 0, 0.03),
+      rgba(28, 28, 30, 0.1)
+    );
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+    border-color: #e10600;
+  }
+
+  @media (min-width: 769px) {
+    .categories:hover {
+      background: linear-gradient(
+        145deg,
+        rgba(255, 0, 0, 0.08),
+        rgba(28, 28, 30, 0.15)
+      );
+    }
+  }
+}
+
+/* Increase heading text size 100% on desktop */
+@media (min-width: 769px) {
+  .categories .category-heading {
+    font-size: 1.8rem; /* 100% larger */
+  }
+}
+
+/* Category list */
+.categories ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.categories li {
+  display: flex;
+  align-items: center;
+  padding: 1rem 0;
+  cursor: pointer;
+  transition: color 0.3s;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.categories li.active {
+  color: #e10600;
+  font-weight: 700;
+}
+
+.categories li:hover {
+  color: #e10600;
+}
+
+.cat-icon {
+  width: 24px;
+  height: 24px;
+  margin-right: 0.75rem;
+}
+
+/* MOBILE DROPDOWN */
+.mobile-dropdown {
+  display: none;
+  width: 100%;
+  margin-bottom: 2rem;
+}
+
+.category-select {
+  width: 100%;
+  max-width: 320px;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  border: 1px solid #ccc;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  font-size: 1rem;
+  text-align: left;
+}
+
+/* Responsive rules */
+@media (max-width: 768px) {
+  .categories {
+    display: none;
+  }
+
+  .mobile-dropdown {
+    display: block;
+  }
+}
+</style>

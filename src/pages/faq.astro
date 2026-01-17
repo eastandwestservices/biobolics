@@ -1,0 +1,75 @@
+---
+import Layout from "../components/common/Layout.astro";
+---
+
+<Layout title="FAQ | Biobolics">
+  <main class="faq-page">
+    <section class="page-hero">
+      <div class="container">
+        <h1>Frequently Asked Questions</h1>
+        <p>Find answers to common questions about our products and services.</p>
+      </div>
+    </section>
+
+    <section class="faq-content">
+      <div class="container">
+        <div class="faq-item">
+          <h3>Are Biobolics products safe?</h3>
+          <p>Yes, all our products are manufactured in GMP-certified facilities and undergo rigorous third-party testing to ensure safety and quality.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Where can I buy Biobolics products?</h3>
+          <p>You can purchase our products through our authorized distributors and select retail partners globally.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Do you offer international shipping?</h3>
+          <p>Shipping availability depends on our local distributors in your region. Please check our Distributors page for more information.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Are your products suitable for vegetarians/vegans?</h3>
+          <p>Many of our products are vegetarian and vegan-friendly. Please check the specific product label or description for dietary information.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+</Layout>
+
+<style>
+  .page-hero {
+    background: var(--bg-secondary);
+    padding: 4rem 1rem 2rem;
+    text-align: center;
+  }
+  .page-hero h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+  }
+  .page-hero p {
+    color: var(--text-secondary);
+    font-size: 1.2rem;
+  }
+  
+  .faq-content {
+    padding: 4rem 1rem;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  .faq-item {
+    margin-bottom: 2rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--border-color, #eee);
+  }
+  .faq-item:last-child {
+    border-bottom: none;
+  }
+  .faq-item h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+  }
+  .faq-item p {
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+</style>

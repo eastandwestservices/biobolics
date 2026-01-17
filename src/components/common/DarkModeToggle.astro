@@ -1,26 +1,72 @@
-<button id="darkToggle" class="darkmode-btn" aria-label="Toggle dark mode" style="display:flex; align-items:center; justify-content:center; width:36px; height:36px; border-radius:50%; border:none; background:rgba(0,0,0,0.08); transition:background 0.25s ease;">
-  <svg id="darkIcon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/>
+// No frontmatter needed
+---
+
+<button type="button" class="darkmode-btn" aria-label="Toggle dark mode">
+
+  <!-- Sun Icon (Light Mode) -->
+  <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="#FFD700">
+    <circle cx="12" cy="12" r="5"/>
+    <g stroke="#FFD700" stroke-width="2">
+      <line x1="12" y1="1" x2="12" y2="4"/>
+      <line x1="12" y1="20" x2="12" y2="23"/>
+      <line x1="1" y1="12" x2="4" y2="12"/>
+      <line x1="20" y1="12" x2="23" y2="12"/>
+      <line x1="4" y1="4" x2="6" y2="6"/>
+      <line x1="18" y1="18" x2="20" y2="20"/>
+      <line x1="4" y1="20" x2="6" y2="18"/>
+      <line x1="18" y1="6" x2="20" y2="4"/>
+    </g>
+  </svg>
+
+  <!-- Moon Icon (Dark Mode) -->
+  <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M21.75 15.25A9 9 0 0110.75 2.25a9 9 0 1011 13z"/>
   </svg>
 </button>
 
-<script type="module">
-const toggle = document.getElementById('darkToggle');
-const html = document.documentElement;
+<script is:inline>
+  if (!window.darkModeInitialized) {
+    window.darkModeInitialized = true;
 
-function updateIcon() {
-  const icon = document.getElementById('darkIcon').querySelector('path');
-  icon.setAttribute('d', html.classList.contains('dark') 
-    ? 'M12 3.25a9 9 0 1 0 0 17.5 9 9 0 0 0 0-17.5z'  // sun
-    : 'M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z'); // moon
+    document.addEventListener('click', (e) => {
+      const btn = e.target.closest('.darkmode-btn');
+      if (btn) {
+        const html = document.documentElement;
+        html.classList.toggle('dark');
+        localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+      }
+    });
+  }
+</script>
+
+<style>
+.darkmode-btn {
+  border: none;
+  background: none; /* Remove any inherited background */
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 0; /* remove extra spacing that caused overlap */
+  transition: transform 0.2s ease, color 0.2s ease;
+  color: inherit;
+  width: 28px;
+  height: 28px;
+  z-index: 1002; /* ensure it’s above header layers */
+  position: relative;
 }
 
-if(localStorage.getItem('theme')==='dark') html.classList.add('dark');
-updateIcon();
+.darkmode-btn:hover { transform: scale(1.1); }
 
-toggle.addEventListener('click',()=>{
-  html.classList.toggle('dark');
-  localStorage.setItem('theme', html.classList.contains('dark')?'dark':'light');
-  updateIcon();
-});
-</script>
+.sun-icon, .moon-icon {
+  display: block;
+  background: none; /* force no box */
+  border-radius: 0;
+}
+
+.moon-icon { display: none; }
+
+:global(html.dark) .sun-icon { display: none; }
+:global(html.dark) .moon-icon { display: block; }
+</style>

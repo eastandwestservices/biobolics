@@ -1,266 +1,396 @@
-<!-- ===============================
-     HERO SECTION
-================================= -->
-<section class="hero-banner">
-  <!-- Canvas for particles + blobs -->
-  <canvas id="heroParticles" class="hero-bg" aria-hidden="true"></canvas>
+---
+import { heroData } from '@/data/hero';
+const hero = heroData;
+const hexagonImage = "/brands/sports/brand-hexagon.svg";
+---
 
-  <div class="hero-container">
-    <div class="hero-center">
-      <!-- Hero slogan -->
-      <h1>SCIENCE AND POWER OF NUTRITION</h1>
+<section class="hero-banner relative w-full flex flex-col items-center justify-center overflow-visible">
 
-      <!-- 3-line description -->
-      <p class="hero-description">
-        Biobolics delivers a full range of Premium Nutritions for all ages.<br />
-        Pre-Workout, Post-Workout, Vitamins & Minerals,<br />
-        Tasty Gummies and Stevia Products.
-      </p>
-    </div>
+  <!-- Particle Canvas -->
+  <canvas id="heroParticles" class="hero-canvas" aria-hidden="true"></canvas>
+
+  <!-- Blob Canvas -->
+  <canvas id="heroBlobs" class="hero-blob-canvas" aria-hidden="true"></canvas>
+
+  <!-- Smoke Canvas (behind hexagon) -->
+  <canvas id="heroSmoke" class="hero-smoke-canvas" aria-hidden="true"></canvas>
+
+  <!-- Hero content -->
+  <div class="hero-container relative z-40 flex flex-col items-center text-center">
+    <h1 class="hero-title">{hero.title}</h1>
+    <p class="hero-slogan">FUEL YOUR POTENTIAL</p>
   </div>
+
+  <!-- Hexagon at bottom -->
+  <div class="hero-hexagon absolute left-1/2 bottom-0 z-50 pointer-events-none">
+    <img src={hexagonImage} alt="Hero Hexagon" />
+  </div>
+
 </section>
 
 <style>
-/* ===============================
-   FONTS
-================================= */
-@font-face {
-  font-family: "Square721BT";
-  src: url("/fonts/Square721BT-Roman.woff2") format("woff2");
-  font-weight: 400;
-}
-@font-face {
-  font-family: "Square721BT";
-  src: url("/fonts/Square721BT-Bold.woff2") format("woff2");
-  font-weight: 700;
-}
-@font-face {
-  font-family: "Square721BT";
-  src: url("/fonts/Square721BT-BoldExtended.woff2") format("woff2");
-  font-weight: 800;
-}
-
-/* ===============================
-   HERO WRAPPER (FULL-WIDTH SAFE)
-================================= */
 .hero-banner {
   position: relative;
-  width: 100vw;
-  margin-left: calc(50% - 50vw);
-  margin-right: calc(50% - 50vw);
-  height: 36vh;
-  background: #0b0f14;
+  width: 100%;
+  height: 30vh;
+  min-height: 220px;
   display: flex;
-  align-items: center;
   justify-content: center;
-  overflow: hidden;
+  align-items: center;
+  overflow: visible;
+  background: linear-gradient(135deg, #0b1d33, #020b18);
+  color: #fff;
 }
 
-/* ===============================
-   CANVAS BACKGROUND
-================================= */
-.hero-bg {
+/* Hero content */
+.hero-container {
+  position: relative;
+  z-index: 40;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 1rem;
+  transform: translateY(-12%);
+}
+
+.hero-title {
+  font-family: 'Montserrat', system-ui, -apple-system, sans-serif;
+  font-weight: 800;
+  font-size: clamp(2.6rem, 5vw, 3.1rem);
+  color: #ffffff;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin: 0;
+}
+
+.hero-slogan {
+  font-family: 'Montserrat', system-ui, -apple-system, sans-serif;
+  font-weight: 700;
+  font-size: clamp(1.37rem, 2.8vw, 1.37rem);
+  letter-spacing: 0.2em;
+  color: #e10600;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+/* Hexagon */
+.hero-hexagon {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%) translateY(50%);
+  width: 12%;
+  max-width: 12rem;
+  z-index: 50;
+}
+
+.hero-hexagon img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Particle Canvas */
+.hero-canvas {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
-  background: transparent;
-  z-index: 0;
+  z-index: 35;
+  pointer-events: none;
 }
 
-/* ===============================
-   CONTENT CONTAINER
-================================= */
-.hero-container {
-  position: relative;
-  z-index: 1;
+/* Blob Canvas */
+.hero-blob-canvas {
+  position: absolute;
+  inset: 0;
   width: 100%;
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 0 2rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  height: 100%;
+  z-index: 20;
+  pointer-events: none;
 }
 
-.hero-center {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.75rem;
-  text-align: center;
+/* Smoke Canvas (behind hexagon) */
+.hero-smoke-canvas {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%);
+  width: 100%;
+  height: 50%;
+  max-height: 180px;
+  z-index: 45;
+  pointer-events: none;
 }
 
-/* ===============================
-   TEXT STYLES
-================================= */
-.hero-center h1 {
-  font-family: "Square721BT", sans-serif;
-  font-weight: 800;
-  font-size: clamp(2.2rem, 3vw, 2.5rem);
-  color: #ffffff;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-}
-
-.hero-description {
-  font-family: "Square721BT", sans-serif;
-  font-weight: 400;
-  font-size: clamp(1.86rem, 2.54vw, 2.125rem);
-  color: #ffffff;
-  opacity: 0.85;
-  margin-top: 0.5rem;
-  line-height: 1.4;
-}
-
-/* ===============================
-   RESPONSIVE
-================================= */
+/* Responsive */
 @media (max-width: 1024px) {
-  .hero-banner { height: 40vh; }
-  .hero-center h1 { font-size: 1.8rem; }
-  .hero-description { font-size: 1.86rem; }
+  .hero-banner { height: 35vh; }
+  .hero-title { font-size: clamp(2rem, 6vw, 2.6rem); }
+  .hero-slogan { font-size: clamp(1rem, 3vw, 1.15rem); }
+  .hero-hexagon { width: 15%; }
+  .hero-smoke-canvas { max-height: 140px; }
 }
+
 @media (max-width: 768px) {
-  .hero-banner { height: 45vh; }
-  .hero-center h1 { font-size: 1.5rem; }
-  .hero-description { font-size: 1.6rem; }
-}
-@media (max-width: 480px) {
-  .hero-banner { height: 50vh; }
-  .hero-center h1 { font-size: 1.2rem; }
-  .hero-description { font-size: 1.35rem; }
+  .hero-banner { height: 40vh; }
+  .hero-title { font-size: clamp(1.6rem, 7vw, 2.2rem); }
+  .hero-slogan { font-size: clamp(0.9rem, 3.5vw, 1rem); }
+  .hero-hexagon { width: 20%; }
+  .hero-smoke-canvas { max-height: 100px; }
 }
 </style>
 
-<script type="module">
-const canvas = document.getElementById("heroParticles");
-const ctx = canvas.getContext("2d");
+<script>
+/* ===========================
+   Premium Moving Blobs
+=========================== */
+(function() {
+  const canvas = document.getElementById('heroBlobs');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  if (!ctx) return;
 
-let particles = [];
-let blobs = [];
-let particleCount = window.innerWidth > 768 ? 60 : 20;
-let blobCount = window.innerWidth > 768 ? 7 : 2;
-let mouse = { x: null, y: null };
+  let blobs = [];
+  const colors = [
+    'rgba(225,6,0,0.15)',
+    'rgba(255,165,0,0.12)',
+    'rgba(0,150,255,0.12)',
+    'rgba(255,0,255,0.10)',
+    'rgba(0,255,150,0.10)'
+  ];
 
-function resizeCanvas() {
-  const hero = document.querySelector(".hero-banner");
-  canvas.width = window.innerWidth;
-  canvas.height = hero.offsetHeight;
-}
-window.addEventListener("resize", () => {
-  particleCount = window.innerWidth > 768 ? 60 : 20;
-  blobCount = window.innerWidth > 768 ? 7 : 2;
+  function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = document.querySelector('.hero-banner').offsetHeight;
+  }
+
+  window.addEventListener('resize', resizeCanvas);
   resizeCanvas();
-});
-resizeCanvas();
 
-window.addEventListener("mousemove", (e) => {
-  mouse.x = e.clientX;
-  mouse.y = e.clientY;
-});
-
-function drawHexagon(x, y, radius, angle, color) {
-  ctx.beginPath();
-  for (let i = 0; i < 6; i++) {
-    const a = (Math.PI / 3) * i + angle;
-    const px = x + radius * Math.cos(a);
-    const py = y + radius * Math.sin(a);
-    i === 0 ? ctx.moveTo(px, py) : ctx.lineTo(px, py);
+  function Blob() {
+    this.reset = function() {
+      this.x = Math.random() * canvas.width;
+      this.y = Math.random() * canvas.height;
+      this.radius = 50 + Math.random() * 100;
+      this.color = colors[Math.floor(Math.random() * colors.length)];
+      this.speedX = -0.1 + Math.random() * 0.2;
+      this.speedY = -0.1 + Math.random() * 0.2;
+      this.angle = Math.random() * Math.PI * 2;
+      this.rotationSpeed = (Math.random() - 0.5) * 0.0005;
+    };
+    this.update = function() {
+      this.x += this.speedX;
+      this.y += this.speedY;
+      this.angle += this.rotationSpeed;
+      if(this.x < -this.radius) this.x = canvas.width + this.radius;
+      if(this.x > canvas.width + this.radius) this.x = -this.radius;
+      if(this.y < -this.radius) this.y = canvas.height + this.radius;
+      if(this.y > canvas.height + this.radius) this.y = -this.radius;
+    };
+    this.draw = function() {
+      const gradient = ctx.createRadialGradient(this.x, this.y, this.radius*0.1, this.x, this.y, this.radius);
+      gradient.addColorStop(0, this.color);
+      gradient.addColorStop(1, 'rgba(0,0,0,0)');
+      ctx.fillStyle = gradient;
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+      ctx.fill();
+    };
+    this.reset();
   }
-  ctx.closePath();
-  ctx.fillStyle = color;
-  ctx.fill();
-}
 
-class Particle {
-  constructor() { this.reset(); }
-  reset() {
-    this.x = Math.random() * canvas.width;
-    this.y = Math.random() * canvas.height;
-    this.radius = 3 + Math.random() * 3;
-    this.speedX = -0.3 + Math.random() * 0.6;
-    this.speedY = -0.3 + Math.random() * 0.6;
-    this.angle = -Math.PI / 6;
-    this.rotationSpeed = Math.random() * 0.02 - 0.01;
-    this.color = `hsl(${Math.random() * 360},100%,65%)`;
+  function initBlobs() {
+    blobs = [];
+    for(let i = 0; i < 12; i++) blobs.push(new Blob());
   }
-  update() {
-    this.x += this.speedX;
-    this.y += this.speedY;
-    this.angle += this.rotationSpeed;
-    if (this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height) this.reset();
-    if (mouse.x && mouse.y) {
-      const dx = this.x - mouse.x;
-      const dy = this.y - mouse.y;
-      const dist = Math.sqrt(dx * dx + dy * dy);
-      if (dist < 120) {
-        this.x += dx / 10;
-        this.y += dy / 10;
-      }
+
+  function animateBlobs() {
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    blobs.forEach(b => { b.update(); b.draw(); });
+    requestAnimationFrame(animateBlobs);
+  }
+
+  initBlobs();
+  animateBlobs();
+})();
+</script>
+
+<script>
+/* ===========================
+   Hexagon Particles Animation
+=========================== */
+(function() {
+  const canvas = document.getElementById("heroParticles");
+  if (!canvas) return;
+  const ctx = canvas.getContext("2d");
+  if (!ctx) return;
+
+  let particles = [];
+  let particleCount = window.innerWidth > 768 ? 30 : 10;
+  const mouse = { x: 0, y: 0 };
+  const mutedPalette = ['#555555', '#666666', '#777777', '#4f4f4f', '#5a5a5a'];
+
+  function resizeCanvas() {
+    const hero = document.querySelector(".hero-banner");
+    if (hero) {
+      canvas.width = window.innerWidth;
+      canvas.height = hero.offsetHeight;
     }
   }
-  draw() { drawHexagon(this.x, this.y, this.radius, this.angle, this.color); }
-}
 
-class Blob {
-  constructor() { this.reset(); }
-  reset() {
-    this.x = Math.random() * canvas.width;
-    this.y = Math.random() * canvas.height;
-    this.radius = 60 + Math.random() * 100;
-    this.speedX = -0.1 + Math.random() * 0.2;
-    this.speedY = -0.1 + Math.random() * 0.2;
-    this.color = `hsla(${Math.random() * 360},100%,65%,0.15)`;
-  }
-  update() {
-    this.x += this.speedX;
-    this.y += this.speedY;
-    if (
-      this.x < -this.radius ||
-      this.x > canvas.width + this.radius ||
-      this.y < -this.radius ||
-      this.y > canvas.height + this.radius
-    ) this.reset();
-  }
-  draw() {
-    const grad = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.radius);
-    grad.addColorStop(0, this.color);
-    grad.addColorStop(1, "rgba(0,0,0,0)");
-    ctx.fillStyle = grad;
+  window.addEventListener("resize", function() {
+    particleCount = window.innerWidth > 768 ? 30 : 10;
+    resizeCanvas();
+    initParticles();
+  });
+
+  window.addEventListener("mousemove", function(e) {
+    const rect = canvas.getBoundingClientRect();
+    mouse.x = e.clientX - rect.left;
+    mouse.y = e.clientY - rect.top;
+  });
+
+  resizeCanvas();
+
+  function drawHexagon(x, y, radius, angle, color) {
     ctx.beginPath();
-    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+    for (let i = 0; i < 6; i++) {
+      const a = (Math.PI / 3) * i + angle;
+      const px = x + radius * Math.cos(a);
+      const py = y + radius * Math.sin(a);
+      if (i === 0) ctx.moveTo(px, py);
+      else ctx.lineTo(px, py);
+    }
+    ctx.closePath();
+    ctx.fillStyle = color;
     ctx.fill();
   }
-}
 
-for (let i = 0; i < particleCount; i++) particles.push(new Particle());
-for (let i = 0; i < blobCount; i++) blobs.push(new Blob());
+  function Particle() {
+    this.reset = function() {
+      this.x = Math.random() * canvas.width;
+      this.y = Math.random() * canvas.height;
+      this.radius = 3 + Math.random() * 3;
+      this.speedX = -0.15 + Math.random() * 0.3;
+      this.speedY = -0.15 + Math.random() * 0.3;
+      this.angle = Math.random() * Math.PI * 2;
+      this.rotationSpeed = (Math.random() - 0.5) * 0.002;
+      const rand = Math.random();
+      if (rand < 0.1) this.color = '#ffffff';
+      else if (rand < 0.4) this.color = '#e10600';
+      else this.color = mutedPalette[Math.floor(Math.random() * mutedPalette.length)];
+    };
 
-function connectParticles() {
-  for (let a = 0; a < particles.length; a++) {
-    for (let b = a; b < particles.length; b++) {
-      const dx = particles[a].x - particles[b].x;
-      const dy = particles[a].y - particles[b].y;
-      const dist = Math.sqrt(dx * dx + dy * dy);
-      if (dist < 100) {
+    this.update = function() {
+      this.x += this.speedX;
+      this.y += this.speedY;
+      this.angle += this.rotationSpeed;
+
+      if (this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height) this.reset();
+
+      if (mouse.x !== 0 && mouse.y !== 0) {
+        const dx = this.x - mouse.x;
+        const dy = this.y - mouse.y;
+        const dist = Math.sqrt(dx*dx + dy*dy);
+        if (dist < 100) { this.x += dx / 20; this.y += dy / 20; }
+      }
+    };
+
+    this.draw = function() {
+      drawHexagon(this.x, this.y, this.radius, this.angle, this.color);
+      if (this.color === '#e10600') {
         ctx.beginPath();
-        ctx.strokeStyle = particles[a].color.replace("hsl", "hsla").replace(")", ",0.5)");
-        ctx.lineWidth = 1;
-        ctx.moveTo(particles[a].x, particles[a].y);
-        ctx.lineTo(particles[b].x, particles[b].y);
+        for (let i = 0; i < 6; i++) {
+          const a = (Math.PI / 3) * i + this.angle;
+          const px = this.x + (this.radius + 2) * Math.cos(a);
+          const py = this.y + (this.radius + 2) * Math.sin(a);
+          if (i === 0) ctx.moveTo(px, py);
+          else ctx.lineTo(px, py);
+        }
+        ctx.closePath();
+        ctx.strokeStyle = '#ffffff';
+        ctx.lineWidth = 1.5;
         ctx.stroke();
       }
-    }
-  }
-}
+    };
 
-function animate() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  blobs.forEach(b => { b.update(); b.draw(); });
-  particles.forEach(p => { p.update(); p.draw(); });
-  connectParticles();
-  requestAnimationFrame(animate);
-}
-animate();
+    this.reset();
+  }
+
+  function initParticles() {
+    particles = [];
+    for (let i = 0; i < particleCount; i++) particles.push(new Particle());
+  }
+
+  function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    particles.forEach(p => { p.update(); p.draw(); });
+    requestAnimationFrame(animate);
+  }
+
+  initParticles();
+  animate();
+})();
+</script>
+
+<script>
+/* ===========================
+   Smoke/Smog Effect Behind Hexagon
+=========================== */
+(function() {
+  const canvas = document.getElementById('heroSmoke');
+  if(!canvas) return;
+  const ctx = canvas.getContext('2d');
+  if(!ctx) return;
+
+  let smokes = [];
+
+  function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = document.querySelector('.hero-smoke-canvas').offsetHeight;
+  }
+  window.addEventListener('resize', resizeCanvas);
+  resizeCanvas();
+
+  function Smoke() {
+    this.reset = function() {
+      this.x = Math.random() * canvas.width;
+      this.y = canvas.height + Math.random() * 50;
+      this.radius = 40 + Math.random() * 60;
+      this.alpha = 0.05 + Math.random() * 0.08;
+      this.speedY = -0.02 - Math.random() * 0.03;
+      this.angle = Math.random() * Math.PI * 2;
+    };
+    this.update = function() {
+      this.y += this.speedY;
+      if(this.y + this.radius < 0) this.reset();
+    };
+    this.draw = function() {
+      const gradient = ctx.createRadialGradient(this.x, this.y, this.radius*0.1, this.x, this.y, this.radius);
+      gradient.addColorStop(0, `rgba(200,200,200,${this.alpha})`);
+      gradient.addColorStop(1, 'rgba(0,0,0,0)');
+      ctx.fillStyle = gradient;
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+      ctx.fill();
+    };
+    this.reset();
+  }
+
+  function initSmoke() {
+    smokes = [];
+    for(let i=0;i<10;i++) smokes.push(new Smoke());
+  }
+
+  function animateSmoke() {
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    smokes.forEach(s => { s.update(); s.draw(); });
+    requestAnimationFrame(animateSmoke);
+  }
+
+  initSmoke();
+  animateSmoke();
+})();
 </script>

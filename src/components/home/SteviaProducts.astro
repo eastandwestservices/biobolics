@@ -1,0 +1,250 @@
+<section id="stevia-products" class="sports-nutrition-section">
+  <div class="sports-container">
+
+    <!-- LEFT CONTENT -->
+    <div class="left-content reveal-left">
+      <h2 class="section-heading">Biobolics Stevia Products</h2>
+
+      <p class="description">
+        Our Stevia products are crafted to deliver natural sweetness without compromising quality or wellness. Each product is carefully formulated for purity, consistency, and enjoyment in your daily routine.
+      </p>
+
+      <!-- ICONS WITH TOOLTIPS -->
+      <div class="icon-row">
+        <div class="icon-item">
+          <img src="/icons/stevia/glutenfree.svg" alt="Gluten Free" />
+          <span class="icon-tooltip">Gluten Free</span>
+        </div>
+
+        <div class="icon-item">
+          <img src="/icons/stevia/gmofree.svg" alt="GMO Free" />
+          <span class="icon-tooltip">GMO Free</span>
+        </div>
+
+        <div class="icon-item">
+          <img src="/icons/stevia/noartificial.svg" alt="No Artificial" />
+          <span class="icon-tooltip">No Artificial Flavors</span>
+        </div>
+
+        <div class="icon-item">
+          <img src="/icons/stevia/nocalories.svg" alt="No Calories" />
+          <span class="icon-tooltip">No Calories</span>
+        </div>
+
+        <div class="icon-item">
+          <img src="/icons/stevia/nosideeffects.svg" alt="No Side Effects" />
+          <span class="icon-tooltip">No Side Effects</span>
+        </div>
+      </div>
+
+      <!-- BUTTON -->
+      <div class="cta-wrapper">
+        <button class="cta-button">Visit Now</button>
+      </div>
+    </div>
+
+    <!-- RIGHT IMAGE -->
+    <div class="right-image reveal-right">
+      <img src="/images/stevia/stevia-main.webp" alt="Stevia Main" />
+    </div>
+
+  </div>
+</section>
+
+<script>
+if (typeof window !== 'undefined') {
+  const observer = new IntersectionObserver(
+    entries => {
+      entries.forEach(entry => {
+        entry.target.classList.toggle('is-visible', entry.isIntersecting);
+      });
+    },
+    { threshold: 0.15 }
+  );
+
+  document
+    .querySelectorAll('.reveal-left, .reveal-right')
+    .forEach(el => observer.observe(el));
+}
+</script>
+
+<style>
+/* ===============================
+   LAYOUT
+================================ */
+.sports-nutrition-section {
+  width: 100%;
+  padding: 6rem 0;
+}
+
+.sports-container {
+  display: flex;
+  align-items: stretch;
+  width: 100%;
+}
+
+/* LEFT */
+.left-content {
+  flex: 1;
+  padding: 3rem 2.5rem 3rem 125px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* RIGHT */
+.right-image {
+  flex: 1;
+  padding: 3rem 125px 3rem 2.5rem; /* ✅ FIX: RIGHT SIDE EQUALIZED */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.right-image img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* ===============================
+   TYPOGRAPHY
+================================ */
+.section-heading {
+  font-size: 3.64rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+}
+
+.description {
+  font-size: 1.3rem;
+  line-height: 1.7;
+  text-align: justify;
+  margin-bottom: 2.2rem;
+}
+
+/* ===============================
+   ICONS + TOOLTIPS
+================================ */
+.icon-row {
+  display: flex;
+  gap: 2.8rem;
+  margin-bottom: 2.5rem;
+}
+
+.icon-item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-item img {
+  transition: filter 0.35s ease, transform 0.35s ease;
+  cursor: pointer;
+}
+
+/* Desktop icon size */
+@media (min-width: 769px) {
+  .icon-item img {
+    width: 72px;
+    height: 72px;
+  }
+}
+
+/* Tooltip */
+.icon-tooltip {
+  position: absolute;
+  bottom: -38px;
+  padding: 6px 12px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  background: rgba(10, 15, 42, 0.9);
+  color: #ffffff;
+  border-radius: 8px;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateY(6px);
+  pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.icon-item:hover .icon-tooltip {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Icon hover: single color */
+.icon-item:hover img {
+  filter: invert(22%) sepia(92%) saturate(3200%) hue-rotate(10deg);
+  transform: translateY(-3px);
+}
+
+/* ===============================
+   BUTTON
+================================ */
+.cta-wrapper {
+  margin-top: auto;
+}
+
+.cta-button {
+  padding: 12px 28px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  background: linear-gradient(to bottom, #ff3b3b, #d80000);
+  color: #ffffff;
+  transition: all 0.35s ease;
+}
+
+.cta-button:hover {
+  background: linear-gradient(to bottom, #d0d0d0, #a9a9a9);
+  color: #0a0f2a;
+}
+
+/* ===============================
+   REVEAL
+================================ */
+.reveal-left {
+  opacity: 0;
+  transform: translateX(-60px);
+  transition: all 0.8s cubic-bezier(0.22,1,0.36,1);
+}
+
+.reveal-right {
+  opacity: 0;
+  transform: translateX(60px);
+  transition: all 0.8s cubic-bezier(0.22,1,0.36,1);
+}
+
+.reveal-left.is-visible,
+.reveal-right.is-visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* ===============================
+   MOBILE
+================================ */
+@media (max-width: 768px) {
+  .sports-container {
+    flex-direction: column-reverse;
+    padding: 0 2rem;
+  }
+
+  .left-content,
+  .right-image {
+    padding: 2rem 1.5rem;
+  }
+
+  .section-heading {
+    font-size: 2.2rem;
+  }
+
+  .description {
+    font-size: 1.2rem;
+  }
+}
+</style>

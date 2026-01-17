@@ -1,0 +1,28 @@
+---
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title><slot name="title" /></title>
+
+    <!-- Optional: theme color for mobile -->
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0B1D33" media="(prefers-color-scheme: dark)" />
+  </head>
+
+  <body class="overflow-x-hidden bg-var bg-color text-var text-color">
+    <Header />
+
+    <!-- Brand Page Wrapper -->
+    <main class="relative">
+      <slot />
+    </main>
+
+    <Footer />
+  </body>
+</html>

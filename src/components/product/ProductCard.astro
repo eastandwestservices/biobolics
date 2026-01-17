@@ -1,0 +1,60 @@
+---
+const { product } = Astro.props;
+---
+
+<div class="product-card">
+  <img src={product.image} alt={product.name} class="product-img" />
+  <h3 class="product-name">{product.name}</h3>
+  <a href={product.link ?? '#'} class="explore-btn">Explore</a>
+</div>
+
+<style>
+.product-card {
+  width: 220px; /* keep same card width */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end; /* move name + button to bottom */
+  background: transparent;
+  padding: 0.5rem;
+  text-align: center;
+  color: inherit;
+  transition: transform 0.3s;
+  border-radius: 0.5rem;
+}
+
+.product-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+}
+
+.product-img {
+  width: 100%;
+  height: 234px; /* 30% bigger than original 180px */
+  object-fit: cover;
+  border-radius: 0.35rem;
+  margin-bottom: 0.25rem; /* reduced gap to name */
+}
+
+.product-name {
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem; /* ✅ added small gap before button */
+}
+
+.explore-btn {
+  display: inline-block;
+  background: #e10600; /* red default */
+  color: #fff;
+  font-weight: 600;
+  padding: 0.35rem 0.8rem;
+  border-radius: 0.35rem;
+  text-decoration: none;
+  transition: all 0.3s;
+}
+
+.explore-btn:hover {
+  background: linear-gradient(to right, #c0c0c0, #e6e6e6); /* silver on hover */
+  color: #111;
+}
+</style>

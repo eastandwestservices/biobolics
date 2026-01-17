@@ -1,66 +1,199 @@
 ---
-const images = [
-  "/images/image1.webp",
-  "/images/image2.webp",  // add more images here
-  "/images/image3.webp"
-];
----
-<section class="health-insights">
-  <div class="left-column">
-    {images.map((img, index) => (
-      <img src={img} alt={`Insight ${index + 1}`} class="fade-image" />
-    ))}
-  </div>
+import { healthInsightsData } from '@/data/healthInsights';
 
-  <div class="right-column">
-    <h2>Power of Nutrition</h2>
-    <p>Discover the science-backed benefits of our products and how they can improve your health and wellbeing.</p>
-    <ul>
-      <li>Boosts immunity</li>
-      <li>Enhances energy</li>
-      <li>Supports overall wellness</li>
-    </ul>
+const section = healthInsightsData[0] || {};
+const images = section.images || [];
+const title = section.title || "";
+const description = section.description || "";
+const points = section.points || [];
+---
+
+<section class="health-insights-section">
+  <div class="insight-container">
+    <!-- Image Side -->
+    <div class="insight-visual">
+      {images.map((img, index) => (
+        <img 
+          src={img} 
+          alt={`Health Insight ${index + 1}`} 
+          class="insight-image"
+          style={`animation-delay: ${index * 5}s`}
+        />
+      ))}
+      <div class="insight-overlay"></div>
+    </div>
+
+    <!-- Content Side -->
+    <div class="insight-content">
+      <div class="content-inner">
+        <h2>{title}</h2>
+        <p class="insight-desc">{description}</p>
+        
+        <ul class="insight-points">
+          {points.map(point => (
+            <li>
+              <div class="icon-box">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+              </div>
+              <span>{point}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
   </div>
 </section>
 
 <style>
-.health-insights {
-  display: flex;
-  width: 100%;
-  min-height: 500px;
-}
+  .health-insights-section {
+    width: 100%;
+    background-color: #fff;
+    position: relative;
+    overflow: hidden;
+  }
 
-.left-column, .right-column {
-  flex: 1;
-}
+  .insight-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    min-height: 600px;
+  }
 
-.left-column {
-  position: relative;
-}
+  /* Desktop View */
+  @media (min-width: 1024px) {
+    .insight-container {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
 
-.fade-image {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  opacity: 0;
-  animation: fade 15s infinite;
-}
+  /* Visual Side (Images) */
+  .insight-visual {
+    position: relative;
+    width: 100%;
+    height: 400px; /* Mobile height */
+    overflow: hidden;
+    background-color: #f0f0f0;
+  }
 
-.fade-image:nth-child(1) { animation-delay: 0s; }
-.fade-image:nth-child(2) { animation-delay: 5s; }
-.fade-image:nth-child(3) { animation-delay: 10s; }
+  @media (min-width: 1024px) {
+    .insight-visual {
+      height: auto; /* Fill height on desktop */
+      min-height: 600px;
+    }
+  }
 
-@keyframes fade {
-  0%, 33% { opacity: 0; }
-  10%, 23% { opacity: 1; }
-  33%, 100% { opacity: 0; }
-}
+  .insight-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    animation: fadeCycle 15s infinite;
+  }
 
-.right-column {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 40px;
-}
+  .insight-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(45deg, rgba(0,0,0,0.1), transparent);
+    z-index: 10;
+  }
+
+  @keyframes fadeCycle {
+    0%, 33% { opacity: 0; z-index: 1; }
+    5%, 28% { opacity: 1; z-index: 2; transform: scale(1.05); }
+    33%, 100% { opacity: 0; z-index: 1; }
+  }
+
+  /* Content Side */
+  .insight-content {
+    display: flex;
+    align-items: center;
+    padding: 3rem 1.5rem;
+    background-color: #fff;
+  }
+
+  @media (min-width: 768px) {
+    .insight-content {
+      padding: 4rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .insight-content {
+      padding: 5rem 4rem;
+    }
+  }
+
+  .content-inner {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  h2 {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #111;
+    margin-bottom: 1.5rem;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+  }
+
+  @media (min-width: 768px) {
+    h2 { font-size: 2.5rem; }
+  }
+
+  .insight-desc {
+    font-size: 1.1rem;
+    color: #555;
+    line-height: 1.6;
+    margin-bottom: 2.5rem;
+  }
+
+  /* Points List */
+  .insight-points {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .insight-points li {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    font-size: 1.05rem;
+    color: #333;
+    line-height: 1.5;
+  }
+
+  .icon-box {
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+    color: #2563eb;
+    margin-top: 2px;
+  }
+
+  .icon-box svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  /* Dark Mode */
+  :global(.dark) .health-insights-section,
+  :global(.dark) .insight-content {
+    background-color: #111827;
+  }
+
+  :global(.dark) h2 { color: #fff; }
+  :global(.dark) .insight-desc { color: #9ca3af; }
+  :global(.dark) .insight-points li { color: #d1d5db; }
+  :global(.dark) .icon-box { color: #60a5fa; }
+  :global(.dark) .insight-visual { background-color: #1f2937; }
+
 </style>
