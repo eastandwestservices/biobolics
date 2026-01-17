@@ -1,6 +1,4 @@
 ---
-// src/pages/brand/[slug].astro
-
 import Layout from '../../components/common/Layout.astro';
 import CategorySidebar from '../../components/brand/CategorySidebar.astro';
 import ProductGrid from '../../components/product/ProductGrid.astro';
@@ -9,15 +7,13 @@ import SolutionBasedProducts from '../../components/brand/SolutionBasedProducts.
 import BrandBanner from '../../components/brand/BrandBanner.astro';
 import SportsBrandHero from '../../components/brand/SportsBrandHero.astro';
 
-// 🔹 This is critical for dynamic routes
 export async function getStaticPaths() {
-  const brands = ['sports', 'vitamins', 'gummies', 'stevia'];
+  const brands = ['sports']; // Only sports for now to avoid errors
   return brands.map((slug) => ({ params: { slug } }));
 }
 
 const { slug } = Astro.params;
 
-// Sample brand data
 const brandData = {
   sports: {
     name: 'Sports',
@@ -47,8 +43,7 @@ const brandData = {
       { name: 'Collagen', short: 'Hair, skin, nails', folder: 'collagen' },
       { name: 'Glucosamine', short: 'Supports joint health', folder: 'glucosamine' },
     ],
-  },
-  // add other brands if needed
+  }
 };
 
 const brand = brandData[slug];
@@ -58,12 +53,9 @@ let selectedCategoryIndex = 0;
 ---
 
 <Layout title={`${brand.name} | Biobolics`}>
-
-  <!-- Hero Section -->
   {slug === 'sports' && <SportsBrandHero />}
 
-  <!-- Brand Main Section -->
-  <section class="brand-main mt-24"> <!-- add margin-top to push down -->
+  <section class="brand-main mt-24">
     <CategorySidebar
       categories={brand.categories}
       selectedIndex={selectedCategoryIndex}
@@ -72,11 +64,9 @@ let selectedCategoryIndex = 0;
     <ProductGrid products={brand.products} />
   </section>
 
-  <!-- Additional Sections -->
   <AdvanceYourBody />
   <SolutionBasedProducts />
   <BrandBanner />
-
 </Layout>
 
 <style>
@@ -89,13 +79,9 @@ let selectedCategoryIndex = 0;
   gap: 2rem;
 }
 
-.brand-main.mt-24 {
-  margin-top: 6rem; /* push down from hero */
-}
+.brand-main.mt-24 { margin-top: 6rem; }
 
 @media (max-width: 768px) {
-  .brand-main {
-    grid-template-columns: 1fr;
-  }
+  .brand-main { grid-template-columns: 1fr; }
 }
 </style>
